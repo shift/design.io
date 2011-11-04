@@ -1,6 +1,6 @@
 # Design.io
 
-> Design.io: CSS3 + TextMate + Node.js = Real-Time Web Design
+> CSS3 + TextMate + Node.js = Real-Time Web Design
 
 ## Video Tutorial
 

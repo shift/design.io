@@ -2,8 +2,6 @@
 
 > Design.io: CSS3 + TextMate + Node.js = Real-Time Web Design
 
-Vimeo Video:
-
 [![Here's a video tutorial on vimeo](http://i.imgur.com/JunAS.png)](http://player.vimeo.com/video/31589739?title=0&amp;byline=0&amp;portrait=0&autoplay=true)
 
 ## Install

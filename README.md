@@ -2,9 +2,9 @@
 
 > Node.js + Textmate + CSS3 = Photoshop
 
-[Here's a video tutorial on vimeo](http://vimeo.com/31589739)
-
 ## Install
+
+- [Here's a video tutorial on vimeo](http://vimeo.com/31589739)
 
 ```
 npm install design.io

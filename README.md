@@ -4,7 +4,7 @@
 
 ## Install
 
-[Here's a video tutorial on vimeo](http://vimeo.com/31589739)
+[Here's a video tutorial on vimeo](http://vimeo.com/lancepollard/design-io)
 
 ```
 npm install design.io

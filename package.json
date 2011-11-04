@@ -1,7 +1,7 @@
 {
   "name": "design.io",
   "version": "0.1.4",
-  "description": "Design Framework for the TextMate Developer",
+  "description": "Design Your App in Real-Time from TextMate - Taking Advantage of Socket.io",
   "homepage": "http://github.com/viatropos/design.io",
   "main": "lib/index.js",
   "author": "Lance Pollard <lancejpollard@gmail.com>",

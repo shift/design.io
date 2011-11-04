@@ -1,0 +1,582 @@
+info it worked if it ends with ok
+verbose cli [ 'node', '/usr/local/bin/npm', 'publish' ]
+info using npm@1.0.94
+info using node@v0.4.7
+verbose /usr/local/bin/node node symlink
+verbose config file /Users/viatropos/.npmrc
+verbose config file /usr/local/etc/npmrc
+verbose publish [ '.' ]
+silly testEngine { name: 'design.io',
+silly testEngine   version: '0.1.4',
+silly testEngine   description: 'Design Your App in Real-Time from TextMate - Taking Advantage of Socket.io',
+silly testEngine   homepage: 'http://github.com/viatropos/design.io',
+silly testEngine   main: 'lib/index.js',
+silly testEngine   author: 
+silly testEngine    { name: 'Lance Pollard',
+silly testEngine      email: 'lancejpollard@gmail.com' },
+silly testEngine   keywords: [ 'design', 'development', 'node' ],
+silly testEngine   licenses: [ { type: 'MIT', url: 'http://mths.be/mit' } ],
+silly testEngine   bugs: { url: 'https://github.com/viatropos/design.io/issues' },
+silly testEngine   repository: 
+silly testEngine    { type: 'git',
+silly testEngine      url: 'git://github.com/viatropos/design.io.git' },
+silly testEngine   engines: { node: '>= 0.4.0' },
+silly testEngine   bin: { metro: './bin/design.io' },
+silly testEngine   dependencies: 
+silly testEngine    { shift: '>= 0.1.4',
+silly testEngine      'watch-node': '>= 0.1.0',
+silly testEngine      commander: '>= 0.3.2',
+silly testEngine      'socket.io': '>= 0.8.6',
+silly testEngine      connect: '>= 1.7.2',
+silly testEngine      request: '>= 2.1.1',
+silly testEngine      express: '>= 2.5.0',
+silly testEngine      stylus: '>= 0.19.0' },
+silly testEngine   _npmUser: 
+silly testEngine    { name: 'viatropos',
+silly testEngine      email: 'lancejpollard@gmail.com' },
+silly testEngine   _id: 'design.io@0.1.4',
+silly testEngine   devDependencies: {},
+silly testEngine   _engineSupported: true,
+silly testEngine   _npmVersion: '1.0.94',
+silly testEngine   _nodeVersion: 'v0.4.7',
+silly testEngine   _defaultsLoaded: true,
+silly testEngine   scripts: {} }
+verbose caching /Users/viatropos/Documents/git/personal/plugins/design.io/package.json
+verbose loadDefaults design.io@0.1.4
+info prepublish design.io@0.1.4
+verbose cache add [ '.', null ]
+silly cache add: name, spec, args [ undefined, '.', [ '.', null ] ]
+verbose parsed url { pathname: '.', href: '.' }
+silly testEngine { name: 'design.io',
+silly testEngine   version: '0.1.4',
+silly testEngine   description: 'Design Your App in Real-Time from TextMate - Taking Advantage of Socket.io',
+silly testEngine   homepage: 'http://github.com/viatropos/design.io',
+silly testEngine   main: 'lib/index.js',
+silly testEngine   author: 
+silly testEngine    { name: 'Lance Pollard',
+silly testEngine      email: 'lancejpollard@gmail.com' },
+silly testEngine   keywords: [ 'design', 'development', 'node' ],
+silly testEngine   licenses: [ { type: 'MIT', url: 'http://mths.be/mit' } ],
+silly testEngine   bugs: { url: 'https://github.com/viatropos/design.io/issues' },
+silly testEngine   repository: 
+silly testEngine    { type: 'git',
+silly testEngine      url: 'git://github.com/viatropos/design.io.git' },
+silly testEngine   engines: { node: '>= 0.4.0' },
+silly testEngine   bin: { metro: './bin/design.io' },
+silly testEngine   dependencies: 
+silly testEngine    { shift: '>= 0.1.4',
+silly testEngine      'watch-node': '>= 0.1.0',
+silly testEngine      commander: '>= 0.3.2',
+silly testEngine      'socket.io': '>= 0.8.6',
+silly testEngine      connect: '>= 1.7.2',
+silly testEngine      request: '>= 2.1.1',
+silly testEngine      express: '>= 2.5.0',
+silly testEngine      stylus: '>= 0.19.0' },
+silly testEngine   _npmUser: 
+silly testEngine    { name: 'viatropos',
+silly testEngine      email: 'lancejpollard@gmail.com' },
+silly testEngine   _id: 'design.io@0.1.4',
+silly testEngine   devDependencies: {},
+silly testEngine   _engineSupported: true,
+silly testEngine   _npmVersion: '1.0.94',
+silly testEngine   _nodeVersion: 'v0.4.7',
+silly testEngine   _defaultsLoaded: true,
+silly testEngine   path: '/Users/viatropos/Documents/git/personal/plugins/design.io',
+silly testEngine   bundleDependencies: [] }
+verbose caching package.json
+verbose loadDefaults design.io@0.1.4
+verbose pack /Users/viatropos/Documents/git/personal/plugins/design.io /var/folders/T4/T4Hvwd2MEsWu2cjSEFKHwU+++TI/-Tmp-/npm-1320379583398/1320379583398-0.6093957321718335/tmp.tgz
+silly testEngine { name: 'design.io-example',
+silly testEngine   version: '0.1.0',
+silly testEngine   description: 'Example usage for design.io',
+silly testEngine   homepage: 'http://github.com/viatropos/design.io',
+silly testEngine   main: 'lib/index.js',
+silly testEngine   author: 
+silly testEngine    { name: 'Lance Pollard',
+silly testEngine      email: 'lancejpollard@gmail.com' },
+silly testEngine   keywords: [ 'design', 'development', 'node' ],
+silly testEngine   licenses: [ { type: 'MIT', url: 'http://mths.be/mit' } ],
+silly testEngine   bugs: { url: 'https://github.com/viatropos/design.io/issues' },
+silly testEngine   repository: 
+silly testEngine    { type: 'git',
+silly testEngine      url: 'git://github.com/viatropos/design.io.git' },
+silly testEngine   engines: { node: '>= 0.4.0' },
+silly testEngine   dependencies: 
+silly testEngine    { connect: '>= 1.7.2',
+silly testEngine      request: '>= 2.1.1',
+silly testEngine      express: '>= 2.5.0',
+silly testEngine      stylus: '>= 0.19.0',
+silly testEngine      jade: '>= 0.16.4',
+silly testEngine      'design.io': '>= 0.1.0' },
+silly testEngine   _npmUser: 
+silly testEngine    { name: 'viatropos',
+silly testEngine      email: 'lancejpollard@gmail.com' },
+silly testEngine   _id: 'design.io-example@0.1.0',
+silly testEngine   scripts: { start: 'node server.js' },
+silly testEngine   devDependencies: {},
+silly testEngine   _engineSupported: true,
+silly testEngine   _npmVersion: '1.0.94',
+silly testEngine   _nodeVersion: 'v0.4.7',
+silly testEngine   _defaultsLoaded: true,
+silly testEngine   path: '/Users/viatropos/Documents/git/personal/plugins/design.io/example',
+silly testEngine   bundleDependencies: [] }
+verbose caching /Users/viatropos/Documents/git/personal/plugins/design.io/example/package.json
+verbose loadDefaults design.io-example@0.1.0
+verbose mkdir (expected) error ENOENT, No such file or directory '/var/folders/T4/T4Hvwd2MEsWu2cjSEFKHwU+++TI/-Tmp-/npm-1320379583398'
+verbose mkdir (expected) error ENOENT, No such file or directory '/var/folders/T4/T4Hvwd2MEsWu2cjSEFKHwU+++TI/-Tmp-/npm-1320379583398/1320379583398-0.6093957321718335'
+verbose mkdir done: /var/folders/T4/T4Hvwd2MEsWu2cjSEFKHwU+++TI/-Tmp-/npm-1320379583398/1320379583398-0.6093957321718335 755
+verbose mkdir'ed /var/folders/T4/T4Hvwd2MEsWu2cjSEFKHwU+++TI/-Tmp-/npm-1320379583398/1320379583398-0.6093957321718335
+verbose tar about to write tar and gzip it.
+silly tar args [ '-czvf',
+silly tar args   '-',
+silly tar args   'design.io/.gitignore',
+silly tar args   'design.io/Cakefile',
+silly tar args   'design.io/MIT-LICENSE',
+silly tar args   'design.io/package.json',
+silly tar args   'design.io/README.md',
+silly tar args   'design.io/bin/design.io',
+silly tar args   'design.io/lib/design-client.js',
+silly tar args   'design.io/lib/design-server.js',
+silly tar args   'design.io/lib/design-watcher.js',
+silly tar args   'design.io/lib/index.js',
+silly tar args   'design.io/src/design-client.coffee',
+silly tar args   'design.io/src/design-server.coffee',
+silly tar args   'design.io/src/design-watcher.coffee',
+silly tar args   'design.io/src/index.coffee',
+silly tar args   'design.io/spec/application.js',
+silly tar args   'design.io/spec/application.coffee',
+silly tar args   'design.io/spec/server.js',
+silly tar args   'design.io/spec/javascripts/application.coffee',
+silly tar args   'design.io/spec/javascripts/application.js',
+silly tar args   'design.io/spec/javascripts/socket.io.js',
+silly tar args   'design.io/spec/stylesheets/another.styl',
+silly tar args   'design.io/spec/stylesheets/application.styl',
+silly tar args   'design.io/spec/stylesheets/css.css',
+silly tar args   'design.io/spec/views/layout.jade',
+silly tar args   'design.io/spec/views/index.jade',
+silly tar args   'design.io/example/app.coffee',
+silly tar args   'design.io/example/.gitignore',
+silly tar args   'design.io/example/favicon.ico',
+silly tar args   'design.io/example/package.json',
+silly tar args   'design.io/example/README.md',
+silly tar args   'design.io/example/server.js',
+silly tar args   'design.io/example/javascripts/design.io.js',
+silly tar args   'design.io/example/javascripts/socket.io.js',
+silly tar args   'design.io/example/src/app.coffee',
+silly tar args   'design.io/example/src/app.styl',
+silly tar args   'design.io/example/src/app2.styl',
+silly tar args   'design.io/example/views/index.jade',
+silly tar args   'design.io/example/views/layout.jade' ]
+verbose mkdir (expected) error ENOENT, No such file or directory '/var/folders/T4/T4Hvwd2MEsWu2cjSEFKHwU+++TI/-Tmp-/npm-1320379583398/1320379583398-0.6093957321718335/contents'
+verbose mkdir (expected) error ENOENT, No such file or directory '/var/folders/T4/T4Hvwd2MEsWu2cjSEFKHwU+++TI/-Tmp-/npm-1320379583398/1320379583398-0.6093957321718335/contents/___package.npm'
+verbose mkdir done: /var/folders/T4/T4Hvwd2MEsWu2cjSEFKHwU+++TI/-Tmp-/npm-1320379583398/1320379583398-0.6093957321718335/contents/___package.npm 755
+verbose unpack_ uid, gid [ undefined, undefined ]
+verbose unpackTarget /var/folders/T4/T4Hvwd2MEsWu2cjSEFKHwU+++TI/-Tmp-/npm-1320379583398/1320379583398-0.6093957321718335/contents/package
+silly gunzTarPerm modes [ '755', '644' ]
+silly tar err x design.io/.gitignore
+silly tar err x design.io/Cakefile
+silly tar err x design.io/MIT-LICENSE
+silly tar err x design.io/package.json
+silly tar err x design.io/README.md
+silly tar err x design.io/bin/design.io
+silly tar err x design.io/lib/design-client.js
+silly tar err x design.io/lib/design-server.js
+silly tar err x design.io/lib/design-watcher.js
+silly tar err x design.io/lib/index.js
+silly tar err x design.io/src/design-client.coffee
+silly tar err x design.io/src/design-server.coffee
+silly tar err x design.io/src/design-watcher.coffee
+silly tar err x design.io/src/index.coffee
+silly tar err x design.io/spec/application.js
+silly tar err x design.io/spec/application.coffee
+silly tar err x design.io/spec/server.js
+silly tar err x design.io/spec/javascripts/application.coffee
+silly tar err x design.io/spec/javascripts/application.js
+silly tar err x design.io/spec/javascripts/socket.io.js
+silly tar err x design.io/spec/stylesheets/another.styl
+silly tar err x design.io/spec/stylesheets/application.styl
+silly tar err x design.io/spec/stylesheets/css.css
+silly tar err x design.io/spec/views/layout.jade
+silly tar err x design.io/spec/views/index.jade
+silly tar err x design.io/example/app.coffee
+silly tar err x design.io/example/.gitignore
+silly tar err x design.io/example/favicon.ico
+silly tar err x design.io/example/package.json
+silly tar err x design.io/example/README.md
+silly tar err x design.io/example/server.js
+silly tar err x design.io/example/javascripts/design.io.js
+silly tar err x design.io/example/javascripts/socket.io.js
+silly tar err x design.io/example/src/app.coffee
+silly tar err x design.io/example/src/app.styl
+silly tar err x design.io/example/src/app2.styl
+silly tar err x design.io/example/views/index.jade
+silly tar err x design.io/example/views/layout.jade
+silly asyncMap in gTP /var/folders/T4/T4Hvwd2MEsWu2cjSEFKHwU+++TI/-Tmp-/npm-1320379583398/1320379583398-0.6093957321718335/contents/___package.npm/design.io
+silly asyncMap in gTP /var/folders/T4/T4Hvwd2MEsWu2cjSEFKHwU+++TI/-Tmp-/npm-1320379583398/1320379583398-0.6093957321718335/contents/___package.npm/design.io/.gitignore
+silly asyncMap in gTP /var/folders/T4/T4Hvwd2MEsWu2cjSEFKHwU+++TI/-Tmp-/npm-1320379583398/1320379583398-0.6093957321718335/contents/___package.npm/design.io/Cakefile
+silly asyncMap in gTP /var/folders/T4/T4Hvwd2MEsWu2cjSEFKHwU+++TI/-Tmp-/npm-1320379583398/1320379583398-0.6093957321718335/contents/___package.npm/design.io/MIT-LICENSE
+silly asyncMap in gTP /var/folders/T4/T4Hvwd2MEsWu2cjSEFKHwU+++TI/-Tmp-/npm-1320379583398/1320379583398-0.6093957321718335/contents/___package.npm/design.io/package.json
+silly asyncMap in gTP /var/folders/T4/T4Hvwd2MEsWu2cjSEFKHwU+++TI/-Tmp-/npm-1320379583398/1320379583398-0.6093957321718335/contents/___package.npm/design.io/README.md
+silly asyncMap in gTP /var/folders/T4/T4Hvwd2MEsWu2cjSEFKHwU+++TI/-Tmp-/npm-1320379583398/1320379583398-0.6093957321718335/contents/___package.npm/design.io/bin
+silly asyncMap in gTP /var/folders/T4/T4Hvwd2MEsWu2cjSEFKHwU+++TI/-Tmp-/npm-1320379583398/1320379583398-0.6093957321718335/contents/___package.npm/design.io/bin/design.io
+silly asyncMap in gTP /var/folders/T4/T4Hvwd2MEsWu2cjSEFKHwU+++TI/-Tmp-/npm-1320379583398/1320379583398-0.6093957321718335/contents/___package.npm/design.io/lib
+silly asyncMap in gTP /var/folders/T4/T4Hvwd2MEsWu2cjSEFKHwU+++TI/-Tmp-/npm-1320379583398/1320379583398-0.6093957321718335/contents/___package.npm/design.io/lib/design-client.js
+silly asyncMap in gTP /var/folders/T4/T4Hvwd2MEsWu2cjSEFKHwU+++TI/-Tmp-/npm-1320379583398/1320379583398-0.6093957321718335/contents/___package.npm/design.io/lib/design-server.js
+silly asyncMap in gTP /var/folders/T4/T4Hvwd2MEsWu2cjSEFKHwU+++TI/-Tmp-/npm-1320379583398/1320379583398-0.6093957321718335/contents/___package.npm/design.io/lib/design-watcher.js
+silly asyncMap in gTP /var/folders/T4/T4Hvwd2MEsWu2cjSEFKHwU+++TI/-Tmp-/npm-1320379583398/1320379583398-0.6093957321718335/contents/___package.npm/design.io/lib/index.js
+silly asyncMap in gTP /var/folders/T4/T4Hvwd2MEsWu2cjSEFKHwU+++TI/-Tmp-/npm-1320379583398/1320379583398-0.6093957321718335/contents/___package.npm/design.io/src
+silly asyncMap in gTP /var/folders/T4/T4Hvwd2MEsWu2cjSEFKHwU+++TI/-Tmp-/npm-1320379583398/1320379583398-0.6093957321718335/contents/___package.npm/design.io/src/design-client.coffee
+silly asyncMap in gTP /var/folders/T4/T4Hvwd2MEsWu2cjSEFKHwU+++TI/-Tmp-/npm-1320379583398/1320379583398-0.6093957321718335/contents/___package.npm/design.io/src/design-server.coffee
+silly asyncMap in gTP /var/folders/T4/T4Hvwd2MEsWu2cjSEFKHwU+++TI/-Tmp-/npm-1320379583398/1320379583398-0.6093957321718335/contents/___package.npm/design.io/src/design-watcher.coffee
+silly asyncMap in gTP /var/folders/T4/T4Hvwd2MEsWu2cjSEFKHwU+++TI/-Tmp-/npm-1320379583398/1320379583398-0.6093957321718335/contents/___package.npm/design.io/src/index.coffee
+silly asyncMap in gTP /var/folders/T4/T4Hvwd2MEsWu2cjSEFKHwU+++TI/-Tmp-/npm-1320379583398/1320379583398-0.6093957321718335/contents/___package.npm/design.io/example
+silly asyncMap in gTP /var/folders/T4/T4Hvwd2MEsWu2cjSEFKHwU+++TI/-Tmp-/npm-1320379583398/1320379583398-0.6093957321718335/contents/___package.npm/design.io/example/.gitignore
+silly asyncMap in gTP /var/folders/T4/T4Hvwd2MEsWu2cjSEFKHwU+++TI/-Tmp-/npm-1320379583398/1320379583398-0.6093957321718335/contents/___package.npm/design.io/example/app.coffee
+silly asyncMap in gTP /var/folders/T4/T4Hvwd2MEsWu2cjSEFKHwU+++TI/-Tmp-/npm-1320379583398/1320379583398-0.6093957321718335/contents/___package.npm/design.io/example/favicon.ico
+silly asyncMap in gTP /var/folders/T4/T4Hvwd2MEsWu2cjSEFKHwU+++TI/-Tmp-/npm-1320379583398/1320379583398-0.6093957321718335/contents/___package.npm/design.io/example/package.json
+silly asyncMap in gTP /var/folders/T4/T4Hvwd2MEsWu2cjSEFKHwU+++TI/-Tmp-/npm-1320379583398/1320379583398-0.6093957321718335/contents/___package.npm/design.io/example/README.md
+silly asyncMap in gTP /var/folders/T4/T4Hvwd2MEsWu2cjSEFKHwU+++TI/-Tmp-/npm-1320379583398/1320379583398-0.6093957321718335/contents/___package.npm/design.io/example/server.js
+silly asyncMap in gTP /var/folders/T4/T4Hvwd2MEsWu2cjSEFKHwU+++TI/-Tmp-/npm-1320379583398/1320379583398-0.6093957321718335/contents/___package.npm/design.io/example/javascripts
+silly asyncMap in gTP /var/folders/T4/T4Hvwd2MEsWu2cjSEFKHwU+++TI/-Tmp-/npm-1320379583398/1320379583398-0.6093957321718335/contents/___package.npm/design.io/example/javascripts/design.io.js
+silly asyncMap in gTP /var/folders/T4/T4Hvwd2MEsWu2cjSEFKHwU+++TI/-Tmp-/npm-1320379583398/1320379583398-0.6093957321718335/contents/___package.npm/design.io/example/javascripts/socket.io.js
+silly asyncMap in gTP /var/folders/T4/T4Hvwd2MEsWu2cjSEFKHwU+++TI/-Tmp-/npm-1320379583398/1320379583398-0.6093957321718335/contents/___package.npm/design.io/example/src
+silly asyncMap in gTP /var/folders/T4/T4Hvwd2MEsWu2cjSEFKHwU+++TI/-Tmp-/npm-1320379583398/1320379583398-0.6093957321718335/contents/___package.npm/design.io/example/src/app.coffee
+silly asyncMap in gTP /var/folders/T4/T4Hvwd2MEsWu2cjSEFKHwU+++TI/-Tmp-/npm-1320379583398/1320379583398-0.6093957321718335/contents/___package.npm/design.io/example/src/app.styl
+silly asyncMap in gTP /var/folders/T4/T4Hvwd2MEsWu2cjSEFKHwU+++TI/-Tmp-/npm-1320379583398/1320379583398-0.6093957321718335/contents/___package.npm/design.io/example/src/app2.styl
+silly asyncMap in gTP /var/folders/T4/T4Hvwd2MEsWu2cjSEFKHwU+++TI/-Tmp-/npm-1320379583398/1320379583398-0.6093957321718335/contents/___package.npm/design.io/example/views
+silly asyncMap in gTP /var/folders/T4/T4Hvwd2MEsWu2cjSEFKHwU+++TI/-Tmp-/npm-1320379583398/1320379583398-0.6093957321718335/contents/___package.npm/design.io/example/views/index.jade
+silly asyncMap in gTP /var/folders/T4/T4Hvwd2MEsWu2cjSEFKHwU+++TI/-Tmp-/npm-1320379583398/1320379583398-0.6093957321718335/contents/___package.npm/design.io/example/views/layout.jade
+silly asyncMap in gTP /var/folders/T4/T4Hvwd2MEsWu2cjSEFKHwU+++TI/-Tmp-/npm-1320379583398/1320379583398-0.6093957321718335/contents/___package.npm/design.io/spec
+silly asyncMap in gTP /var/folders/T4/T4Hvwd2MEsWu2cjSEFKHwU+++TI/-Tmp-/npm-1320379583398/1320379583398-0.6093957321718335/contents/___package.npm/design.io/spec/application.coffee
+silly asyncMap in gTP /var/folders/T4/T4Hvwd2MEsWu2cjSEFKHwU+++TI/-Tmp-/npm-1320379583398/1320379583398-0.6093957321718335/contents/___package.npm/design.io/spec/application.js
+silly asyncMap in gTP /var/folders/T4/T4Hvwd2MEsWu2cjSEFKHwU+++TI/-Tmp-/npm-1320379583398/1320379583398-0.6093957321718335/contents/___package.npm/design.io/spec/server.js
+silly asyncMap in gTP /var/folders/T4/T4Hvwd2MEsWu2cjSEFKHwU+++TI/-Tmp-/npm-1320379583398/1320379583398-0.6093957321718335/contents/___package.npm/design.io/spec/javascripts
+silly asyncMap in gTP /var/folders/T4/T4Hvwd2MEsWu2cjSEFKHwU+++TI/-Tmp-/npm-1320379583398/1320379583398-0.6093957321718335/contents/___package.npm/design.io/spec/javascripts/application.coffee
+silly asyncMap in gTP /var/folders/T4/T4Hvwd2MEsWu2cjSEFKHwU+++TI/-Tmp-/npm-1320379583398/1320379583398-0.6093957321718335/contents/___package.npm/design.io/spec/javascripts/application.js
+silly asyncMap in gTP /var/folders/T4/T4Hvwd2MEsWu2cjSEFKHwU+++TI/-Tmp-/npm-1320379583398/1320379583398-0.6093957321718335/contents/___package.npm/design.io/spec/javascripts/socket.io.js
+silly asyncMap in gTP /var/folders/T4/T4Hvwd2MEsWu2cjSEFKHwU+++TI/-Tmp-/npm-1320379583398/1320379583398-0.6093957321718335/contents/___package.npm/design.io/spec/stylesheets
+silly asyncMap in gTP /var/folders/T4/T4Hvwd2MEsWu2cjSEFKHwU+++TI/-Tmp-/npm-1320379583398/1320379583398-0.6093957321718335/contents/___package.npm/design.io/spec/stylesheets/another.styl
+silly asyncMap in gTP /var/folders/T4/T4Hvwd2MEsWu2cjSEFKHwU+++TI/-Tmp-/npm-1320379583398/1320379583398-0.6093957321718335/contents/___package.npm/design.io/spec/stylesheets/application.styl
+silly asyncMap in gTP /var/folders/T4/T4Hvwd2MEsWu2cjSEFKHwU+++TI/-Tmp-/npm-1320379583398/1320379583398-0.6093957321718335/contents/___package.npm/design.io/spec/stylesheets/css.css
+silly asyncMap in gTP /var/folders/T4/T4Hvwd2MEsWu2cjSEFKHwU+++TI/-Tmp-/npm-1320379583398/1320379583398-0.6093957321718335/contents/___package.npm/design.io/spec/views
+silly asyncMap in gTP /var/folders/T4/T4Hvwd2MEsWu2cjSEFKHwU+++TI/-Tmp-/npm-1320379583398/1320379583398-0.6093957321718335/contents/___package.npm/design.io/spec/views/index.jade
+silly asyncMap in gTP /var/folders/T4/T4Hvwd2MEsWu2cjSEFKHwU+++TI/-Tmp-/npm-1320379583398/1320379583398-0.6093957321718335/contents/___package.npm/design.io/spec/views/layout.jade
+verbose gunzed /var/folders/T4/T4Hvwd2MEsWu2cjSEFKHwU+++TI/-Tmp-/npm-1320379583398/1320379583398-0.6093957321718335/contents/___package.npm/design.io
+verbose rm'ed /var/folders/T4/T4Hvwd2MEsWu2cjSEFKHwU+++TI/-Tmp-/npm-1320379583398/1320379583398-0.6093957321718335/contents/package
+verbose renamed [ '/var/folders/T4/T4Hvwd2MEsWu2cjSEFKHwU+++TI/-Tmp-/npm-1320379583398/1320379583398-0.6093957321718335/contents/___package.npm/design.io',
+verbose renamed   '/var/folders/T4/T4Hvwd2MEsWu2cjSEFKHwU+++TI/-Tmp-/npm-1320379583398/1320379583398-0.6093957321718335/contents/package' ]
+silly testEngine { name: 'design.io',
+silly testEngine   version: '0.1.4',
+silly testEngine   description: 'Design Your App in Real-Time from TextMate - Taking Advantage of Socket.io',
+silly testEngine   homepage: 'http://github.com/viatropos/design.io',
+silly testEngine   main: 'lib/index.js',
+silly testEngine   author: 
+silly testEngine    { name: 'Lance Pollard',
+silly testEngine      email: 'lancejpollard@gmail.com' },
+silly testEngine   keywords: [ 'design', 'development', 'node' ],
+silly testEngine   licenses: [ { type: 'MIT', url: 'http://mths.be/mit' } ],
+silly testEngine   bugs: { url: 'https://github.com/viatropos/design.io/issues' },
+silly testEngine   repository: 
+silly testEngine    { type: 'git',
+silly testEngine      url: 'git://github.com/viatropos/design.io.git' },
+silly testEngine   engines: { node: '>= 0.4.0' },
+silly testEngine   bin: { metro: './bin/design.io' },
+silly testEngine   dependencies: 
+silly testEngine    { shift: '>= 0.1.4',
+silly testEngine      'watch-node': '>= 0.1.0',
+silly testEngine      commander: '>= 0.3.2',
+silly testEngine      'socket.io': '>= 0.8.6',
+silly testEngine      connect: '>= 1.7.2',
+silly testEngine      request: '>= 2.1.1',
+silly testEngine      express: '>= 2.5.0',
+silly testEngine      stylus: '>= 0.19.0' },
+silly testEngine   _npmUser: 
+silly testEngine    { name: 'viatropos',
+silly testEngine      email: 'lancejpollard@gmail.com' },
+silly testEngine   _id: 'design.io@0.1.4',
+silly testEngine   devDependencies: {},
+silly testEngine   _engineSupported: true,
+silly testEngine   _npmVersion: '1.0.94',
+silly testEngine   _nodeVersion: 'v0.4.7',
+silly testEngine   _defaultsLoaded: true,
+silly testEngine   path: '/var/folders/T4/T4Hvwd2MEsWu2cjSEFKHwU+++TI/-Tmp-/npm-1320379583398/1320379583398-0.6093957321718335/contents/package' }
+verbose caching /var/folders/T4/T4Hvwd2MEsWu2cjSEFKHwU+++TI/-Tmp-/npm-1320379583398/1320379583398-0.6093957321718335/contents/package/package.json
+verbose loadDefaults design.io@0.1.4
+verbose tarball contents [ 'package' ]
+verbose from cache /var/folders/T4/T4Hvwd2MEsWu2cjSEFKHwU+++TI/-Tmp-/npm-1320379583398/1320379583398-0.6093957321718335/contents/package/package.json
+verbose pack /var/folders/T4/T4Hvwd2MEsWu2cjSEFKHwU+++TI/-Tmp-/npm-1320379583398/1320379583398-0.6093957321718335/contents/package /Users/viatropos/.npm/design.io/0.1.4/package.tgz
+silly testEngine { name: 'design.io-example',
+silly testEngine   version: '0.1.0',
+silly testEngine   description: 'Example usage for design.io',
+silly testEngine   homepage: 'http://github.com/viatropos/design.io',
+silly testEngine   main: 'lib/index.js',
+silly testEngine   author: 
+silly testEngine    { name: 'Lance Pollard',
+silly testEngine      email: 'lancejpollard@gmail.com' },
+silly testEngine   keywords: [ 'design', 'development', 'node' ],
+silly testEngine   licenses: [ { type: 'MIT', url: 'http://mths.be/mit' } ],
+silly testEngine   bugs: { url: 'https://github.com/viatropos/design.io/issues' },
+silly testEngine   repository: 
+silly testEngine    { type: 'git',
+silly testEngine      url: 'git://github.com/viatropos/design.io.git' },
+silly testEngine   engines: { node: '>= 0.4.0' },
+silly testEngine   dependencies: 
+silly testEngine    { connect: '>= 1.7.2',
+silly testEngine      request: '>= 2.1.1',
+silly testEngine      express: '>= 2.5.0',
+silly testEngine      stylus: '>= 0.19.0',
+silly testEngine      jade: '>= 0.16.4',
+silly testEngine      'design.io': '>= 0.1.0' },
+silly testEngine   _npmUser: 
+silly testEngine    { name: 'viatropos',
+silly testEngine      email: 'lancejpollard@gmail.com' },
+silly testEngine   _id: 'design.io-example@0.1.0',
+silly testEngine   scripts: { start: 'node server.js' },
+silly testEngine   devDependencies: {},
+silly testEngine   _engineSupported: true,
+silly testEngine   _npmVersion: '1.0.94',
+silly testEngine   _nodeVersion: 'v0.4.7',
+silly testEngine   _defaultsLoaded: true,
+silly testEngine   path: '/var/folders/T4/T4Hvwd2MEsWu2cjSEFKHwU+++TI/-Tmp-/npm-1320379583398/1320379583398-0.6093957321718335/contents/package/example' }
+verbose caching /var/folders/T4/T4Hvwd2MEsWu2cjSEFKHwU+++TI/-Tmp-/npm-1320379583398/1320379583398-0.6093957321718335/contents/package/example/package.json
+verbose loadDefaults design.io-example@0.1.0
+verbose mkdir'ed /Users/viatropos/.npm/design.io/0.1.4
+verbose tar about to write tar and gzip it.
+silly tar args [ '-czvf',
+silly tar args   '-',
+silly tar args   'package/.gitignore',
+silly tar args   'package/Cakefile',
+silly tar args   'package/MIT-LICENSE',
+silly tar args   'package/package.json',
+silly tar args   'package/README.md',
+silly tar args   'package/bin/design.io',
+silly tar args   'package/lib/design-server.js',
+silly tar args   'package/lib/design-client.js',
+silly tar args   'package/lib/design-watcher.js',
+silly tar args   'package/lib/index.js',
+silly tar args   'package/src/design-client.coffee',
+silly tar args   'package/src/design-server.coffee',
+silly tar args   'package/src/design-watcher.coffee',
+silly tar args   'package/src/index.coffee',
+silly tar args   'package/spec/application.coffee',
+silly tar args   'package/spec/application.js',
+silly tar args   'package/spec/server.js',
+silly tar args   'package/spec/javascripts/application.coffee',
+silly tar args   'package/spec/javascripts/application.js',
+silly tar args   'package/spec/javascripts/socket.io.js',
+silly tar args   'package/spec/stylesheets/another.styl',
+silly tar args   'package/spec/stylesheets/application.styl',
+silly tar args   'package/spec/stylesheets/css.css',
+silly tar args   'package/spec/views/index.jade',
+silly tar args   'package/spec/views/layout.jade',
+silly tar args   'package/example/.gitignore',
+silly tar args   'package/example/app.coffee',
+silly tar args   'package/example/favicon.ico',
+silly tar args   'package/example/package.json',
+silly tar args   'package/example/README.md',
+silly tar args   'package/example/server.js',
+silly tar args   'package/example/javascripts/design.io.js',
+silly tar args   'package/example/javascripts/socket.io.js',
+silly tar args   'package/example/src/app.coffee',
+silly tar args   'package/example/src/app.styl',
+silly tar args   'package/example/src/app2.styl',
+silly tar args   'package/example/views/index.jade',
+silly tar args   'package/example/views/layout.jade' ]
+verbose mkdir (expected) error ENOENT, No such file or directory '/Users/viatropos/.npm/design.io/0.1.4/___package.npm'
+verbose mkdir done: /Users/viatropos/.npm/design.io/0.1.4/___package.npm 755
+verbose unpack_ uid, gid [ undefined, undefined ]
+verbose unpackTarget /Users/viatropos/.npm/design.io/0.1.4/package
+silly gunzTarPerm modes [ '755', '644' ]
+silly tar err x package/.gitignore
+silly tar err x package/Cakefile
+silly tar err x package/MIT-LICENSE
+silly tar err x package/package.json
+silly tar err x package/README.md
+silly tar err x package/bin/design.io
+silly tar err x package/lib/design-server.js
+silly tar err x package/lib/design-client.js
+silly tar err x package/lib/design-watcher.js
+silly tar err x package/lib/index.js
+silly tar err x package/src/design-client.coffee
+silly tar err x package/src/design-server.coffee
+silly tar err x package/src/design-watcher.coffee
+silly tar err x package/src/index.coffee
+silly tar err x package/spec/application.coffee
+silly tar err x package/spec/application.js
+silly tar err x package/spec/server.js
+silly tar err x package/spec/javascripts/application.coffee
+silly tar err x package/spec/javascripts/application.js
+silly tar err x package/spec/javascripts/socket.io.js
+silly tar err x package/spec/stylesheets/another.styl
+silly tar err x package/spec/stylesheets/application.styl
+silly tar err x package/spec/stylesheets/css.css
+silly tar err x package/spec/views/index.jade
+silly tar err x package/spec/views/layout.jade
+silly tar err x package/example/.gitignore
+silly tar err x package/example/app.coffee
+silly tar err x package/example/favicon.ico
+silly tar err x package/example/package.json
+silly tar err x package/example/README.md
+silly tar err x package/example/server.js
+silly tar err x package/example/javascripts/design.io.js
+silly tar err x package/example/javascripts/socket.io.js
+silly tar err x package/example/src/app.coffee
+silly tar err x package/example/src/app.styl
+silly tar err x package/example/src/app2.styl
+silly tar err x package/example/views/index.jade
+silly tar err x package/example/views/layout.jade
+silly asyncMap in gTP /Users/viatropos/.npm/design.io/0.1.4/___package.npm/package
+silly asyncMap in gTP /Users/viatropos/.npm/design.io/0.1.4/___package.npm/package/.gitignore
+silly asyncMap in gTP /Users/viatropos/.npm/design.io/0.1.4/___package.npm/package/Cakefile
+silly asyncMap in gTP /Users/viatropos/.npm/design.io/0.1.4/___package.npm/package/MIT-LICENSE
+silly asyncMap in gTP /Users/viatropos/.npm/design.io/0.1.4/___package.npm/package/package.json
+silly asyncMap in gTP /Users/viatropos/.npm/design.io/0.1.4/___package.npm/package/README.md
+silly asyncMap in gTP /Users/viatropos/.npm/design.io/0.1.4/___package.npm/package/bin
+silly asyncMap in gTP /Users/viatropos/.npm/design.io/0.1.4/___package.npm/package/bin/design.io
+silly asyncMap in gTP /Users/viatropos/.npm/design.io/0.1.4/___package.npm/package/lib
+silly asyncMap in gTP /Users/viatropos/.npm/design.io/0.1.4/___package.npm/package/lib/design-client.js
+silly asyncMap in gTP /Users/viatropos/.npm/design.io/0.1.4/___package.npm/package/lib/design-server.js
+silly asyncMap in gTP /Users/viatropos/.npm/design.io/0.1.4/___package.npm/package/lib/design-watcher.js
+silly asyncMap in gTP /Users/viatropos/.npm/design.io/0.1.4/___package.npm/package/lib/index.js
+silly asyncMap in gTP /Users/viatropos/.npm/design.io/0.1.4/___package.npm/package/src
+silly asyncMap in gTP /Users/viatropos/.npm/design.io/0.1.4/___package.npm/package/src/design-client.coffee
+silly asyncMap in gTP /Users/viatropos/.npm/design.io/0.1.4/___package.npm/package/src/design-server.coffee
+silly asyncMap in gTP /Users/viatropos/.npm/design.io/0.1.4/___package.npm/package/src/design-watcher.coffee
+silly asyncMap in gTP /Users/viatropos/.npm/design.io/0.1.4/___package.npm/package/src/index.coffee
+silly asyncMap in gTP /Users/viatropos/.npm/design.io/0.1.4/___package.npm/package/example
+silly asyncMap in gTP /Users/viatropos/.npm/design.io/0.1.4/___package.npm/package/example/.gitignore
+silly asyncMap in gTP /Users/viatropos/.npm/design.io/0.1.4/___package.npm/package/example/app.coffee
+silly asyncMap in gTP /Users/viatropos/.npm/design.io/0.1.4/___package.npm/package/example/favicon.ico
+silly asyncMap in gTP /Users/viatropos/.npm/design.io/0.1.4/___package.npm/package/example/package.json
+silly asyncMap in gTP /Users/viatropos/.npm/design.io/0.1.4/___package.npm/package/example/README.md
+silly asyncMap in gTP /Users/viatropos/.npm/design.io/0.1.4/___package.npm/package/example/server.js
+silly asyncMap in gTP /Users/viatropos/.npm/design.io/0.1.4/___package.npm/package/example/javascripts
+silly asyncMap in gTP /Users/viatropos/.npm/design.io/0.1.4/___package.npm/package/example/javascripts/design.io.js
+silly asyncMap in gTP /Users/viatropos/.npm/design.io/0.1.4/___package.npm/package/example/javascripts/socket.io.js
+silly asyncMap in gTP /Users/viatropos/.npm/design.io/0.1.4/___package.npm/package/example/src
+silly asyncMap in gTP /Users/viatropos/.npm/design.io/0.1.4/___package.npm/package/example/src/app.coffee
+silly asyncMap in gTP /Users/viatropos/.npm/design.io/0.1.4/___package.npm/package/example/src/app.styl
+silly asyncMap in gTP /Users/viatropos/.npm/design.io/0.1.4/___package.npm/package/example/src/app2.styl
+silly asyncMap in gTP /Users/viatropos/.npm/design.io/0.1.4/___package.npm/package/example/views
+silly asyncMap in gTP /Users/viatropos/.npm/design.io/0.1.4/___package.npm/package/example/views/index.jade
+silly asyncMap in gTP /Users/viatropos/.npm/design.io/0.1.4/___package.npm/package/example/views/layout.jade
+silly asyncMap in gTP /Users/viatropos/.npm/design.io/0.1.4/___package.npm/package/spec
+silly asyncMap in gTP /Users/viatropos/.npm/design.io/0.1.4/___package.npm/package/spec/application.coffee
+silly asyncMap in gTP /Users/viatropos/.npm/design.io/0.1.4/___package.npm/package/spec/application.js
+silly asyncMap in gTP /Users/viatropos/.npm/design.io/0.1.4/___package.npm/package/spec/server.js
+silly asyncMap in gTP /Users/viatropos/.npm/design.io/0.1.4/___package.npm/package/spec/javascripts
+silly asyncMap in gTP /Users/viatropos/.npm/design.io/0.1.4/___package.npm/package/spec/javascripts/application.coffee
+silly asyncMap in gTP /Users/viatropos/.npm/design.io/0.1.4/___package.npm/package/spec/javascripts/application.js
+silly asyncMap in gTP /Users/viatropos/.npm/design.io/0.1.4/___package.npm/package/spec/javascripts/socket.io.js
+silly asyncMap in gTP /Users/viatropos/.npm/design.io/0.1.4/___package.npm/package/spec/stylesheets
+silly asyncMap in gTP /Users/viatropos/.npm/design.io/0.1.4/___package.npm/package/spec/stylesheets/another.styl
+silly asyncMap in gTP /Users/viatropos/.npm/design.io/0.1.4/___package.npm/package/spec/stylesheets/application.styl
+silly asyncMap in gTP /Users/viatropos/.npm/design.io/0.1.4/___package.npm/package/spec/stylesheets/css.css
+silly asyncMap in gTP /Users/viatropos/.npm/design.io/0.1.4/___package.npm/package/spec/views
+silly asyncMap in gTP /Users/viatropos/.npm/design.io/0.1.4/___package.npm/package/spec/views/index.jade
+silly asyncMap in gTP /Users/viatropos/.npm/design.io/0.1.4/___package.npm/package/spec/views/layout.jade
+verbose gunzed /Users/viatropos/.npm/design.io/0.1.4/___package.npm/package
+verbose rm'ed /Users/viatropos/.npm/design.io/0.1.4/package
+verbose renamed [ '/Users/viatropos/.npm/design.io/0.1.4/___package.npm/package',
+verbose renamed   '/Users/viatropos/.npm/design.io/0.1.4/package' ]
+silly testEngine { name: 'design.io',
+silly testEngine   version: '0.1.4',
+silly testEngine   description: 'Design Your App in Real-Time from TextMate - Taking Advantage of Socket.io',
+silly testEngine   homepage: 'http://github.com/viatropos/design.io',
+silly testEngine   main: 'lib/index.js',
+silly testEngine   author: 
+silly testEngine    { name: 'Lance Pollard',
+silly testEngine      email: 'lancejpollard@gmail.com' },
+silly testEngine   keywords: [ 'design', 'development', 'node' ],
+silly testEngine   licenses: [ { type: 'MIT', url: 'http://mths.be/mit' } ],
+silly testEngine   bugs: { url: 'https://github.com/viatropos/design.io/issues' },
+silly testEngine   repository: 
+silly testEngine    { type: 'git',
+silly testEngine      url: 'git://github.com/viatropos/design.io.git' },
+silly testEngine   engines: { node: '>= 0.4.0' },
+silly testEngine   bin: { metro: './bin/design.io' },
+silly testEngine   dependencies: 
+silly testEngine    { shift: '>= 0.1.4',
+silly testEngine      'watch-node': '>= 0.1.0',
+silly testEngine      commander: '>= 0.3.2',
+silly testEngine      'socket.io': '>= 0.8.6',
+silly testEngine      connect: '>= 1.7.2',
+silly testEngine      request: '>= 2.1.1',
+silly testEngine      express: '>= 2.5.0',
+silly testEngine      stylus: '>= 0.19.0' },
+silly testEngine   _npmUser: 
+silly testEngine    { name: 'viatropos',
+silly testEngine      email: 'lancejpollard@gmail.com' },
+silly testEngine   _id: 'design.io@0.1.4',
+silly testEngine   devDependencies: {},
+silly testEngine   _engineSupported: true,
+silly testEngine   _npmVersion: '1.0.94',
+silly testEngine   _nodeVersion: 'v0.4.7',
+silly testEngine   _defaultsLoaded: true,
+silly testEngine   dist: 
+silly testEngine    { shasum: 'e09aeeb76748ce381d8cd1ccd802b5a48d7a3342',
+silly testEngine      tarball: 'http://registry.npmjs.org/design.io/-/design.io-0.1.4.tgz' } }
+verbose caching /Users/viatropos/.npm/design.io/0.1.4/package/package.json
+verbose loadDefaults design.io@0.1.4
+silly updated sha bytes 40960
+silly updated sha bytes 20480
+info shasum e09aeeb76748ce381d8cd1ccd802b5a48d7a3342
+info shasum /Users/viatropos/.npm/design.io/0.1.4/package.tgz
+verbose from cache /Users/viatropos/.npm/design.io/0.1.4/package/package.json
+verbose chmod /Users/viatropos/.npm/design.io/0.1.4/package.tgz 644
+silly publish { name: 'design.io',
+silly publish   version: '0.1.4',
+silly publish   description: 'Design Your App in Real-Time from TextMate - Taking Advantage of Socket.io',
+silly publish   homepage: 'http://github.com/viatropos/design.io',
+silly publish   main: 'lib/index.js',
+silly publish   author: 
+silly publish    { name: 'Lance Pollard',
+silly publish      email: 'lancejpollard@gmail.com' },
+silly publish   keywords: [ 'design', 'development', 'node' ],
+silly publish   licenses: [ { type: 'MIT', url: 'http://mths.be/mit' } ],
+silly publish   bugs: { url: 'https://github.com/viatropos/design.io/issues' },
+silly publish   repository: 
+silly publish    { type: 'git',
+silly publish      url: 'git://github.com/viatropos/design.io.git' },
+silly publish   engines: { node: '>= 0.4.0' },
+silly publish   bin: { metro: './bin/design.io' },
+silly publish   dependencies: 
+silly publish    { shift: '>= 0.1.4',
+silly publish      'watch-node': '>= 0.1.0',
+silly publish      commander: '>= 0.3.2',
+silly publish      'socket.io': '>= 0.8.6',
+silly publish      connect: '>= 1.7.2',
+silly publish      request: '>= 2.1.1',
+silly publish      express: '>= 2.5.0',
+silly publish      stylus: '>= 0.19.0' },
+silly publish   _npmUser: 
+silly publish    { name: 'viatropos',
+silly publish      email: 'lancejpollard@gmail.com' },
+silly publish   _id: 'design.io@0.1.4',
+silly publish   devDependencies: {},
+silly publish   _engineSupported: true,
+silly publish   _npmVersion: '1.0.94',
+silly publish   _nodeVersion: 'v0.4.7',
+silly publish   _defaultsLoaded: true,
+silly publish   dist: 
+silly publish    { shasum: 'e09aeeb76748ce381d8cd1ccd802b5a48d7a3342',
+silly publish      tarball: 'http://registry.npmjs.org/design.io/-/design.io-0.1.4.tgz' } }
+verbose PUT design.io
+verbose raw, before any munging design.io
+verbose url resolving [ 'http://registry.npmjs.org/', './design.io' ]
+verbose url resolved http://registry.npmjs.org/design.io
+ERR! Failed PUT response undefined
+ERR! Error: ECONNREFUSED, Could not contact DNS servers
+ERR!     at IOWatcher.callback (dns.js:74:15)
+ERR! Report this *entire* log at:
+ERR!     <http://github.com/isaacs/npm/issues>
+ERR! or email it to:
+ERR!     <npm-@googlegroups.com>
+ERR! 
+ERR! System Darwin 10.7.0
+ERR! command "node" "/usr/local/bin/npm" "publish"
+ERR! cwd /Users/viatropos/Documents/git/personal/plugins/design.io
+ERR! node -v v0.4.7
+ERR! npm -v 1.0.94
+ERR! code ECONNREFUSED
+verbose exit [ 1, true ]

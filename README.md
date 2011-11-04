@@ -4,15 +4,13 @@
 
 ## Install
 
-- [Here's a video tutorial on vimeo](http://vimeo.com/31589739)
+[Here's a video tutorial on vimeo](http://vimeo.com/31589739)
 
 ```
 npm install design.io
 ```
 
 ## Example App for Design.io
-
-## Run it
 
 First, make sure you have `design.io` installed:
 

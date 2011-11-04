@@ -1,0 +1,38 @@
+{
+  "name": "design.io",
+  "version": "0.1.4",
+  "description": "Design Framework for the TextMate Developer",
+  "homepage": "http://github.com/viatropos/design.io",
+  "main": "lib/index.js",
+  "author": "Lance Pollard <lancejpollard@gmail.com>",
+  "keywords": [
+    "design",
+    "development",
+    "node"
+  ],
+  "licenses": [
+    {
+      "type": "MIT",
+      "url": "http://mths.be/mit"
+    }
+  ],
+  "bugs": {
+    "url": "https://github.com/viatropos/design.io/issues"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/viatropos/design.io.git"
+  },
+  "engines": { "node": ">= 0.4.0" },
+  "bin": { "metro": "./bin/design.io" },
+  "dependencies": {
+    "shift":              ">= 0.1.4",
+    "watch-node":         ">= 0.1.0",
+    "commander":          ">= 0.3.2",
+    "socket.io":          ">= 0.8.6",
+    "connect":            ">= 1.7.2",
+    "request":            ">= 2.1.1",
+    "express":            ">= 2.5.0",
+    "stylus":             ">= 0.19.0"
+  }
+}

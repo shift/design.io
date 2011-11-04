@@ -6,6 +6,8 @@
 
 [Here's a video tutorial on vimeo](http://vimeo.com/lancepollard/design-io)
 
+<iframe src="http://player.vimeo.com/video/31589739?title=0&amp;byline=0&amp;portrait=0" width="400" height="300" frameborder="0" webkitAllowFullScreen allowFullScreen></iframe><p><a href="http://vimeo.com/31589739">Design.io: Node.js + TextMate + CSS3 = Real-Time Web Design</a> from <a href="http://vimeo.com/lancepollard">Lance Pollard</a> on <a href="http://vimeo.com">Vimeo</a>.</p>
+
 ```
 npm install design.io
 ```

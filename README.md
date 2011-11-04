@@ -1,6 +1,8 @@
-# Design.js
+# Design.io
 
-> Design Your App in Real-Time from TextMate - Taking Advantage of Socket.io
+> Node.js + Textmate + CSS3 = Photoshop
+
+[Here's a video tutorial on vimeo](http://vimeo.com/31589739)
 
 ## Install
 

@@ -1,6 +1,6 @@
 # Design.io
 
-> Node.js + Textmate + CSS3 = Photoshop
+> Design.io: CSS3 + TextMate + Node.js = RealTime Web Design
 
 ## Install
 

@@ -1,6 +1,6 @@
 {
   "name": "design.io",
-  "version": "0.1.4",
+  "version": "0.1.5",
   "description": "Design Your App in Real-Time from TextMate - Taking Advantage of Socket.io",
   "homepage": "http://github.com/viatropos/design.io",
   "main": "lib/index.js",
@@ -24,7 +24,7 @@
     "url": "https://github.com/viatropos/design.io.git"
   },
   "engines": { "node": ">= 0.4.0" },
-  "bin": { "metro": "./bin/design.io" },
+  "bin": { "design.io": "./bin/design.io" },
   "dependencies": {
     "shift":              ">= 0.1.4",
     "watch-node":         ">= 0.1.0",

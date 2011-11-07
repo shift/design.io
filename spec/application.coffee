@@ -2,9 +2,14 @@ io      = require('socket.io')
 express = require("express")
 connect = require('connect')
 _       = require("underscore")._
+Watcher = require("../lib/design.io/watcher")
+
+Watcher.initialize watchfile: "Watchfile", directory: process.cwd(), port: 4181
 
 app     = express.createServer()
+
 io      = io.listen(app)
+io.set 'log level', 1
 coffee  = require('coffee-script')
 
 app.listen(4181)
@@ -24,18 +29,14 @@ app.get '/', (req, res) ->
     port:     app.settings.port
     pretty:   true
 
-app.post '/', (req, res) ->
-  console.log "POSTED"
-  console.log req.body
-  broadcast "update", req.body
-  
-  res.send 'updated'
+app.post '/:event', (req, res) ->
+  broadcast req.params.event, req.body
+  res.send req.params.event
 
 testSocket  = null
 agents      = {}
 
 broadcast = (name, data) ->
-  console.log "BROADCAST #{name}"
   io.sockets.socket(testSocket).emit(name, data)
 
 io.sockets.on 'connection', (socket) ->
@@ -43,7 +44,8 @@ io.sockets.on 'connection', (socket) ->
     socket.set 'userAgent', data, ->
       agents[socket.id] = data
       testSocket        = socket.id
-      socket.emit('ready')
+      socket.emit 'ready'
+      Watcher.connect()
       true
   
   socket.on 'log', (msg) ->

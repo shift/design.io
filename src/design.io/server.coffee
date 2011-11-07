@@ -1,6 +1,7 @@
 io        = require('socket.io')
 connect   = require('connect')
 express   = require('express')
+Watcher   = require('./watcher')
 
 app       = express.createServer()
 io        = io.listen(app)
@@ -10,9 +11,9 @@ app.listen(process.env.PORT || 4181)
 
 app.use connect.bodyParser()
 
-app.post '/', (request, response) ->
-  broadcast "update", request.body
-  response.send 'updated'
+app.post '/:event', (request, response) ->
+  broadcast     request.params.event, request.body
+  response.send request.params.event
 
 broadcast = (name, data) ->
   io.sockets.socket(designer).emit(name, data)

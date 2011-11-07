@@ -1,11 +1,18 @@
 (function() {
-  var agents, app, broadcast, coffee, connect, express, io, jade, testSocket, _;
+  var Watcher, agents, app, broadcast, coffee, connect, express, io, jade, testSocket, _;
   io = require('socket.io');
   express = require("express");
   connect = require('connect');
   _ = require("underscore")._;
+  Watcher = require("../lib/design.io/watcher");
+  Watcher.initialize({
+    watchfile: "Watchfile",
+    directory: process.cwd(),
+    port: 4181
+  });
   app = express.createServer();
   io = io.listen(app);
+  io.set('log level', 1);
   coffee = require('coffee-script');
   app.listen(4181);
   jade = require("jade");
@@ -21,16 +28,13 @@
       pretty: true
     });
   });
-  app.post('/', function(req, res) {
-    console.log("POSTED");
-    console.log(req.body);
-    broadcast("update", req.body);
-    return res.send('updated');
+  app.post('/:event', function(req, res) {
+    broadcast(req.params.event, req.body);
+    return res.send(req.params.event);
   });
   testSocket = null;
   agents = {};
   broadcast = function(name, data) {
-    console.log("BROADCAST " + name);
     return io.sockets.socket(testSocket).emit(name, data);
   };
   io.sockets.on('connection', function(socket) {
@@ -39,6 +43,7 @@
         agents[socket.id] = data;
         testSocket = socket.id;
         socket.emit('ready');
+        Watcher.connect();
         return true;
       });
     });

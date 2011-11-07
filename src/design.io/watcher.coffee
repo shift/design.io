@@ -109,6 +109,7 @@ class Watcher
   constructor: ->
     args      = Array.prototype.slice.call(arguments, 0, arguments.length)
     methods   = args.pop()
+    args = args[0] if args[0] instanceof Array
     @patterns = []
     for arg in args
       @patterns.push if typeof arg == "string" then new RegExp(arg) else arg
@@ -122,6 +123,7 @@ class Watcher
       Watcher.create(arguments...)
     
     # for plugins, like Guard, TODO
-    watcher: (name, callback) ->
+    watcher: (name, options) ->
+      require("design.io-#{name}")(options)
 
 module.exports = Watcher

@@ -81,6 +81,14 @@ module.exports = (options) ->
         $("##{data.id}").remove()
 ```
 
+## Todo
+
+- add/remove link/script tags with path
+- add/remove images
+- jasmine specs
+- internet explorer testing
+- better file system watcher
+
 ## License
 
 (The MIT License)

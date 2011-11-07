@@ -26,6 +26,10 @@ class window.DesignIO
   on: (name, callback) ->
     @callbacks[name] = callback
     
+  runCallback: (name, data) ->
+    @callbacks[name](data) if @callbacks[name]
+    true
+    
   watch: (data) ->
     watcher = {}
     actions = ["create", "update", "delete"]
@@ -42,12 +46,16 @@ class window.DesignIO
       return false
       
     @watchers.push(watcher)
+    
+    @runCallback "watch", data
   
   change: (data) ->
     watchers = @watchers
     for watcher in watchers
       if watcher.match(data.path)
         watcher[data.action].call(window, data) if watcher.hasOwnProperty(data.action)
+        
+    @runCallback "change", data
     
   userAgent: ->
     userAgent:  window.navigator.userAgent

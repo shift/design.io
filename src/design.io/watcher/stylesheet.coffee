@@ -18,7 +18,7 @@ module.exports = (options) ->
     
       fs.readFile path, 'utf-8', (error, result) ->
         engine = Shift.engine(_path.extname(path))
-      
+        
         if engine
           engine.render result, (error, result) ->
             return self.error(error) if error

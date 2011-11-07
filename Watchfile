@@ -1,4 +1,4 @@
-# watcher "stylesheet", extensions: [".styl", ".less", ".sass", ".css"]
+#watcher "stylesheet", extensions: [".styl", ".less", ".sass", ".css"]
 require("./watcher/stylesheet") extensions: [".styl", ".less", ".sass", ".css"]
 
 # if arity is 0

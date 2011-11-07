@@ -37,7 +37,8 @@ testSocket  = null
 agents      = {}
 
 broadcast = (name, data) ->
-  io.sockets.socket(testSocket).emit(name, data)
+  #io.sockets.socket(testSocket).emit(name, data)
+  io.sockets.emit name, data
 
 io.sockets.on 'connection', (socket) ->
   socket.on 'userAgent', (data) ->

@@ -16,7 +16,8 @@ app.post '/:event', (request, response) ->
   response.send request.params.event
 
 broadcast = (name, data) ->
-  io.sockets.socket(designer).emit(name, data)
+  #io.sockets.socket(designer).emit(name, data)
+  io.sockets.broadcast name, data
 
 io.sockets.on 'connection', (socket) ->
   socket.on 'userAgent', (data) ->

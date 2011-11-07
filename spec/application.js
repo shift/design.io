@@ -35,7 +35,7 @@
   testSocket = null;
   agents = {};
   broadcast = function(name, data) {
-    return io.sockets.socket(testSocket).emit(name, data);
+    return io.sockets.emit(name, data);
   };
   io.sockets.on('connection', function(socket) {
     socket.on('userAgent', function(data) {

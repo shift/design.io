@@ -10,7 +10,7 @@ class Command
       .parse(process.argv)
 
     program.directory ||= process.cwd()
-    program.watch     ||= "Watchfile"
+    program.watchfile ||= "Watchfile"
     program.port      = if program.port then parseInt(program.port) else 4181
     
 module.exports = Command

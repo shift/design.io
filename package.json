@@ -1,9 +1,9 @@
 {
   "name": "design.io",
   "version": "0.1.5",
-  "description": "Design Your App in Real-Time from TextMate - Taking Advantage of Socket.io",
+  "description": "Design and Test Your App in Real-Time from TextMate",
   "homepage": "http://github.com/viatropos/design.io",
-  "main": "lib/index.js",
+  "main": "lib/design.io.js",
   "author": "Lance Pollard <lancejpollard@gmail.com>",
   "keywords": [
     "design",
@@ -32,7 +32,6 @@
     "socket.io":          ">= 0.8.6",
     "connect":            ">= 1.7.2",
     "request":            ">= 2.1.1",
-    "express":            ">= 2.5.0",
-    "stylus":             ">= 0.19.0"
+    "express":            ">= 2.5.0"
   }
 }

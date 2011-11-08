@@ -1,4 +1,6 @@
-{spawn, exec}  = require 'child_process'
+{spawn, exec}   = require 'child_process'
+Shift           = require 'shift'
+fs              = require 'fs'
 
 task 'coffee', ->
   coffee = spawn './node_modules/coffee-script/bin/coffee', ['-o', 'lib', '-w', 'src']
@@ -18,3 +20,12 @@ task 'watch-old', 'Compile assets', ->
 task 'watch', ->
   Watcher = require './lib/design.io/watcher'
   Watcher.initialize watchfile: "Watchfile", directory: process.cwd(), port: 4181
+  
+task 'build', ->
+  engine = new Shift.CoffeeScript
+  compressor = new Shift.UglifyJS
+  
+  fs.readFile "./src/design.io/client.coffee", "utf-8", (error, result) ->
+    engine.render result, (error, result) ->
+      compressor.render result, (error, result) ->
+        fs.writeFile "design.io.js", result

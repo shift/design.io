@@ -11,4 +11,4 @@ server.stderr.on 'data', (data) -> console.log data.toString().trim()
 #watcher.stderr.on 'data', (data) -> console.log data.toString().trim()
 
 command = new (require("#{__dirname}/design.io/command"))
-Watcher.initialize watchfile: command.program.watchfile, directory: command.program.directory, port: command.program.port
+require("#{__dirname}/design.io/watcher").initialize watchfile: command.program.watchfile, directory: command.program.directory, port: command.program.port

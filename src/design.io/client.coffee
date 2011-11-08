@@ -34,7 +34,7 @@ class window.DesignIO
     watcher = {}
     actions = ["create", "update", "delete"]
     for action in actions
-      watcher[action] = eval "(#{data[action]})" if data.hasOwnProperty(action)
+      watcher[action] = eval("(#{data[action]})") if data.hasOwnProperty(action)
     
     patterns = []
     for pattern in data.patterns
@@ -53,10 +53,17 @@ class window.DesignIO
     watchers = @watchers
     for watcher in watchers
       if watcher.match(data.path)
-        watcher[data.action].call(window, data) if watcher.hasOwnProperty(data.action)
+        watcher[data.action].call(@, data) if watcher.hasOwnProperty(data.action)
         
     @runCallback "change", data
-    
+  
+  log: (msg) ->
+    if typeof(msg) == "object"
+      msg.userAgent = window.navigator.userAgent
+      msg.url       = window.location.href
+
+    @socket.emit 'log', msg
+  
   userAgent: ->
     userAgent:  window.navigator.userAgent
     url:        window.location.href

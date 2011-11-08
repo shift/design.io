@@ -1,7 +1,10 @@
 io        = require('socket.io')
 connect   = require('connect')
 express   = require('express')
-Watcher   = require('./watcher')
+command   = new (require("./command"))(process.argv)
+Watcher   = require("./watcher")
+
+Watcher.initialize watchfile: command.program.watchfile, directory: command.program.directory, port: command.program.port
 
 app       = express.createServer()
 io        = io.listen(app)

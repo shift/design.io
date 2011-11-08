@@ -68,6 +68,10 @@ watch /\.md$/ # some custom one...
 
 Take a look at the `src/design.io/watcher` directory for more examples, but here's one that watches stylesheets and/or css templates and injects them into the browser, optionally compressing them.
 
+A full extension can be found here as well:
+
+- https://github.com/viatropos/design.io-jasmine
+
 ``` coffeescript
 Shift = require 'shift'
 _path = require 'path'

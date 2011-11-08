@@ -42,7 +42,6 @@ class Watcher
     for watcher in watchers
       if watcher.match(path)
         watcher.action = action
-        console.log watcher.patterns
         break unless !!watcher[action](path)
         
   @connect: ->

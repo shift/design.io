@@ -1,3 +1,6 @@
 [submodule "example"]
 	path = example
 	url = git@github.com:viatropos/design.io-example.git
+[submodule "wiki"]
+	path = wiki
+	url = git@github.com:viatropos/design.io.wiki.git

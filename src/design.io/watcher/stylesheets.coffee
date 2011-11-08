@@ -2,11 +2,6 @@ Shift = require 'shift'
 _path = require 'path'
 fs    = require 'fs'
 
-# ignorePaths "./tmp"
-
-# watcher "assets", ->
-#   watch ".styl"
-
 module.exports = (options = {}) ->
   patterns = options.patterns || [/\.(styl|less|css|sass|scss)$/]
   

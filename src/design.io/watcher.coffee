@@ -19,12 +19,15 @@ class Watcher
         function() {
           var watch       = this.watch;
           var ignorePaths = this.ignorePaths;
+          global.Watcher  = require('./watcher');
           #{result}
+          delete global.Watcher
         }
         "
+        
         eval("(#{context})").call(new Watcher.DSL)
         
-        require('watch-node')(directory, (path) -> Watcher.exec(path))
+        require('watch-node')(directory, (path, prev, curr, action, timestamp) -> Watcher.exec(path, action))
   
   @store: ->
     @_store ||= []
@@ -34,12 +37,13 @@ class Watcher
   @create: ->
     @store().push new @(arguments...)
     
-  @exec: (path, action = "update") ->
+  @exec: (path, action, timestamp) ->
     watchers  = @all()
     for watcher in watchers
       if watcher.match(path)
         watcher.action = action
-        watcher[action](path)
+        console.log watcher.patterns
+        break unless !!watcher[action](path)
         
   @connect: ->
     watchers  = @all()
@@ -58,6 +62,7 @@ class Watcher
     
   error: (error) ->
     console.log error
+    false
     
   toId: (path) ->
     path.replace(process.cwd() + '/', '').replace(/[\/\.]/g, '-')
@@ -99,16 +104,17 @@ class Watcher
       options.push "g" if pattern.global
       data.patterns.push pattern: pattern.source, options: options.join("")
     
-    if @hasOwnProperty("render")
+    if @hasOwnProperty("client")
       actions = ["create", "update", "delete"]
       for action in actions
-        data[action] = @render[action].toString() if @render.hasOwnProperty(action)
+        data[action] = @client[action].toString() if @client.hasOwnProperty(action)
     
     @broadcast "watch", data
   
   constructor: ->
     args      = Array.prototype.slice.call(arguments, 0, arguments.length)
     methods   = args.pop()
+    methods   = methods.call(@) if typeof methods == "function"
     args = args[0] if args[0] instanceof Array
     @patterns = []
     for arg in args
@@ -123,7 +129,7 @@ class Watcher
       Watcher.create(arguments...)
     
     # for plugins, like Guard, TODO
-    watcher: (name, options) ->
+    watcher: (name, options = {}) ->
       require("design.io-#{name}")(options)
 
 module.exports = Watcher

@@ -1,20 +1,3 @@
 #watcher "stylesheet", extensions: [".styl", ".less", ".sass", ".css"]
-require("./watcher/stylesheet") extensions: [".styl", ".less", ".sass", ".css"]
-
-# if arity is 0
-watch /\.(png|jpg)$/, ->
-  server: (path) -> 
-    @broadcast path: path, data: transform(path)
-
-  client: (data) ->
-    $("##{data.id}").attr("src", data.url)
-
-# If arity is 1
-watch /\.(png|jpg)$/, (path) ->
-  @broadcast path: path, data: transform(path)
-  
-# If you don't want to notify the browser
-watch /\.(png|jpg)$/, (path) ->
-  transform(path)
-
-watch /\.(png|jpg)$/, (path) -> path: path, data: transform(path)
+require("./watcher/stylesheets")(compress: true)
+require("./watcher/javascripts")()

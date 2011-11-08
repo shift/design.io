@@ -55,13 +55,13 @@ Design.io comes with two basic extensions:
 1. Stylesheet watching/compressing/injecting
 2. JavaScript watching/compressing/injecting
 
-You can include them in your watchfile like this:
+You can include them in your `Watchfile` like this:
 
 ``` coffeescript
 require("design.io/watcher/stylesheets")(compress: true)
 require("design.io/watcher/javascripts")()
 
-watch /\.md$/ #...
+watch /\.md$/ # some custom one...
 ```
 
 ## Creating Extensions

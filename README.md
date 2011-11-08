@@ -48,6 +48,22 @@ watch /\.(styl|less|sass|scss|css)$/
       
 ```
 
+## Using Extensions
+
+Design.io comes with two basic extensions:
+
+1. Stylesheet watching/compressing/injecting
+2. JavaScript watching/compressing/injecting
+
+You can include them in your watchfile like this:
+
+``` coffeescript
+require("design.io/watcher/stylesheets")(compress: true)
+require("design.io/watcher/javascripts")()
+
+watch /\.md$/ #...
+```
+
 ## Creating Extensions
 
 Take a look at the `src/design.io/watcher` directory for more examples, but here's one that watches stylesheets and/or css templates and injects them into the browser, optionally compressing them.

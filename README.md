@@ -69,9 +69,9 @@ watch /\.md$/ # some custom one...
 ``` coffeescript
 designer = require("design.io").connection(app || 4181)
 
-app.post '/design.io/:event', (request, response) ->
-  designer.emit request.params.event, request.body
-  response.send request.params.event
+app.post '/design.io/:action', (request, response) ->
+  designer.emit request.params.action, request.body
+  response.send request.params.action
 ```
 
 ## License

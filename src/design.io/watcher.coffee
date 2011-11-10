@@ -34,7 +34,7 @@ class Watcher
         }
         "
         
-        eval("(#{context})").call(new Watcher.DSL)
+        eval("(#{context})").call(new Watcher.Watchfile)
         
         callback.call(@) if callback
   
@@ -164,7 +164,7 @@ class Watcher
         
     data
   
-  class @DSL
+  class @Watchfile
     constructor: ->
       Watcher._store = undefined
     

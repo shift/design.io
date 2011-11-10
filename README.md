@@ -57,9 +57,9 @@ Design.io comes with two basic extensions:
 You can include them in your `Watchfile` like this:
 
 ``` coffeescript
-require("design.io").plugin("watchfile")
-require("design.io").plugin("stylesheets", compress: true)
-require("design.io").plugin("javascripts")
+require("design.io").extension("watchfile")
+require("design.io").extension("stylesheets", compress: true)
+require("design.io").extension("javascripts")
 
 watch /\.md$/ # some custom one...
 ```

@@ -17,11 +17,11 @@ class window.DesignIO
     socket.on 'connect', ->
       socket.emit 'userAgent', self.userAgent()
       socket.on 'watch', (data) ->
-        self.watch(data)
+        self.watch JSON.parse(data, @reviver)
       socket.on 'exec', (data) ->
-        self.exec(data)
+        self.exec JSON.parse(data, @reviver)
   
-  # on "ready"  
+  # on "create"
   on: (name, callback) ->
     @callbacks[name] = callback
     
@@ -30,22 +30,11 @@ class window.DesignIO
     true
     
   watch: (data) ->
-    watchers  = data.body
-    actions   = ["create", "update", "delete"]
-    
-    for watcher in watchers
-      watcher.match = eval(watcher.match)
-      
-      for action in actions
-        watcher[action] = eval(watcher[action]) if watcher.hasOwnProperty(action)
-      
-      for pattern, i in watcher.patterns
-        watcher.patterns[i] = new RegExp(pattern.source, pattern.options)
-    
-    @watchers = watchers
+    @watchers = data.body
   
   exec: (data) ->
     watchers = @watchers
+    
     for watcher in watchers
       if watcher.match(data.path)
         watcher[data.action].call(@, data) if watcher.hasOwnProperty(data.action)
@@ -56,9 +45,25 @@ class window.DesignIO
     if typeof(data) == "object"
       data.userAgent = window.navigator.userAgent
       data.url       = window.location.href
-
-    @socket.emit 'log', data
+    
+    @socket.emit 'log', JSON.stringify(data, @replacer)
   
   userAgent: ->
     userAgent:  window.navigator.userAgent
     url:        window.location.href
+    
+  replacer: (key, value) ->
+    if typeof value == "function"
+      "(#{value})"
+    else
+      value
+  
+  reviver: (key, value) ->
+    if typeof value == "string" && 
+      # match start of function or regexp
+      !!value.match(/^(\(?:function\s*\(\)\s*\{|\(\/)/) && 
+      # match end of function or regexp
+      !!value.match(/(?:\}\s*\)|\/\w*\))$/)
+      eval(value)
+    else
+      value

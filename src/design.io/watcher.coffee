@@ -28,6 +28,7 @@ class Watcher
         function() {
           var watch       = this.watch;
           var ignorePaths = this.ignorePaths;
+          var watcher     = this.watcher;
           global.Watcher  = require('./watcher');
           #{result}
           delete global.Watcher
@@ -61,6 +62,22 @@ class Watcher
     
     data
     
+  @replacer: (key, value) ->
+    if typeof value == "function"
+      "(#{value})"
+    else
+      value
+  
+  @reviver: (key, value) ->
+    if typeof value == "string" && 
+      # match start of function or regexp
+      !!value.match(/^(\(?:function\s*\(\)\s*\{|\(\/)/) && 
+      # match end of function or regexp
+      !!value.match(/(?:\}\s*\)|\/\w*\))$/)
+      eval(value)
+    else
+      value
+    
   @exec: (path, action, timestamp) ->
     watchers  = @all()
     
@@ -82,7 +99,7 @@ class Watcher
     params  =
       url:      "#{@url}/design.io/#{action}"
       method:   "POST"
-      body:     JSON.stringify(data)
+      body:     JSON.stringify(data, @replacer)
       headers:
         "Content-Type": "application/json"
     
@@ -145,22 +162,15 @@ class Watcher
     @constructor.broadcast action, data
   
   toJSON: ->
-    data    = patterns: []
-    
-    for pattern in @patterns
-      options = []
-      options.push "m" if pattern.multiline
-      options.push "i" if pattern.ignoreCase
-      options.push "g" if pattern.global
-      data.patterns.push source: pattern.source, options: options.join("")
+    data    = 
+      patterns: @patterns
+      match:    @match
       
-    data.match = "(#{@match.toString()})"
-    
     if @hasOwnProperty("client")
       actions = ["create", "update", "delete"]
       client  = @client
       for action in actions
-        data[action] = "(#{client[action].toString()})" if client.hasOwnProperty(action)
+        data[action] = client[action] if client.hasOwnProperty(action)
         
     data
   

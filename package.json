@@ -26,12 +26,9 @@
   "engines": { "node": ">= 0.4.0" },
   "bin": { "design.io": "./bin/design.io" },
   "dependencies": {
-    "shift":              ">= 0.1.4",
     "watch-node":         ">= 0.1.5",
     "commander":          ">= 0.3.2",
     "socket.io":          ">= 0.8.6",
-    "connect":            ">= 1.7.2",
-    "request":            ">= 2.1.1",
-    "express":            ">= 2.5.0"
+    "request":            ">= 2.1.1"
   }
 }

@@ -40,10 +40,9 @@ module.exports = ->
       
       # this should get better so it knows how to map template files to browser files
       update: (data) ->
-        stylesheets = @stylesheets
-        stylesheets[data.id].remove() if stylesheets[data.id]?
+        @stylesheets[data.id].remove() if @stylesheets[data.id]?
         node = $("<style id='#{data.id}' type='text/css'>#{data.body}</style>")
-        stylesheets[data.id] = node
+        @stylesheets[data.id] = node
         $("body").append(node)
       
       delete: (data) ->

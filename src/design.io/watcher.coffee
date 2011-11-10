@@ -5,14 +5,23 @@ request = require 'request'
 
 class Watcher
   @initialize: (options = {}) ->
-    @watchfile  = watchfile = options.watchfile
-    @directory  = directory = options.directory
+    @directory  = options.directory
+    @watchfile  = options.watchfile
     @port       = options.port
+    @url        = options.url
     
     throw new Error("You must specify the watchfile") unless @watchfile
     throw new Error("You must specify the directory to watch") unless @directory
     
-    fs.readFile watchfile, "utf-8", (error, result) ->
+    @read ->
+      require('watch-node')(@directory, (path, prev, curr, action, timestamp) -> Watcher.exec(path, action))
+       
+    @
+    
+  @read: (callback) ->
+    self = @
+    
+    fs.readFile @watchfile, "utf-8", (error, result) ->
       engine = new Shift.CoffeeScript
       engine.render result, (error, result) ->
         context = "
@@ -27,7 +36,7 @@ class Watcher
         
         eval("(#{context})").call(new Watcher.DSL)
         
-        require('watch-node')(directory, (path, prev, curr, action, timestamp) -> Watcher.exec(path, action))
+        callback.call(@) if callback
   
   @store: ->
     @_store ||= []
@@ -37,27 +46,79 @@ class Watcher
   @create: ->
     @store().push new @(arguments...)
     
+  @update: ->
+    @read @connect
+  
+  @connect: ->
+    @broadcast "watch", body: @toJSON()
+    
+  @toJSON: ->
+    watchers  = @all()
+    data      = []
+
+    for watcher in watchers
+      data.push watcher.toJSON()
+    
+    data
+    
   @exec: (path, action, timestamp) ->
     watchers  = @all()
+    
     for watcher in watchers
       if watcher.match(path)
-        watcher.action = action
-        break unless !!watcher[action](path)
+        watcher.path      = path
+        watcher.action    = action
+        watcher.timestamp = timestamp
         
-  @connect: ->
-    watchers  = @all()
-    watcher.connect() for watcher in watchers
+        success           = !!watcher[action](path)
+        
+        delete watcher.path
+        delete watcher.action
+        delete watcher.timestamp
+        
+        break unless success
+  
+  @broadcast: (action, data) ->
+    params  =
+      url:      "#{@url}/design.io/#{action}"
+      method:   "POST"
+      body:     JSON.stringify(data)
+      headers:
+        "Content-Type": "application/json"
+    
+    request params, (error, response, body) ->
+      if !error && response.statusCode == 200
+        #console.log(body)
+        true
+      else
+        console.log error
+  
+  constructor: ->
+    args      = Array.prototype.slice.call(arguments, 0, arguments.length)
+    methods   = args.pop()
+    methods   = methods.call(@) if typeof methods == "function"
+    args = args[0] if args[0] instanceof Array
+    @patterns = []
+    for arg in args
+      @patterns.push if typeof arg == "string" then new RegExp(arg) else arg
+    @[key]    = value for key, value of methods
   
   # Example:
   # 
   #     create: (path) ->
   #       ext = RegExp.$1
-  create: ->
-    @update(arguments...)
+  create: (path) ->
+    @update(path)
     
-  update: ->
+  update: (path) ->
+    self = @
+    
+    fs.readFile path, 'utf-8', (error, result) ->
+      return self.error(error) if error
+      self.broadcast body: result
     
   delete: ->
+    @broadcast()
     
   error: (error) ->
     console.log error
@@ -70,57 +131,43 @@ class Watcher
     patterns = @patterns
     for pattern in patterns
       return true if !!pattern.exec(path)
-    return false
+    false
     
-  # emit data to browser
+  # send data to all browsers
   broadcast: ->
-    args    = Array.prototype.slice.call(arguments, 0, arguments.length)
-    data    = args.pop()
-    event   = args.shift() || "change"
+    args          = Array.prototype.slice.call(arguments, 0, arguments.length)
+    data          = args.pop() || {}
+    data.action ||= @action
+    data.path   ||= @path
+    data.id     ||= @toId(data.path)
+    action        = args.shift() || "exec"
     
-    data.action = @action
-    
-    params  =
-      url:      "http://localhost:#{Watcher.port}/#{event}"
-      method:   "POST"
-      body:     JSON.stringify(data)
-      headers:
-        "Content-Type": "application/json"
-    
-    request params, (error, response, body) ->
-      if !error && response.statusCode == 200
-        #console.log(body)
-        true
-      else
-        console.log error
-        
-  connect: ->
+    @constructor.broadcast action, data
+  
+  toJSON: ->
     data    = patterns: []
+    
     for pattern in @patterns
       options = []
       options.push "m" if pattern.multiline
       options.push "i" if pattern.ignoreCase
       options.push "g" if pattern.global
-      data.patterns.push pattern: pattern.source, options: options.join("")
+      data.patterns.push source: pattern.source, options: options.join("")
+      
+    data.match = "(#{@match.toString()})"
     
     if @hasOwnProperty("client")
       actions = ["create", "update", "delete"]
+      client  = @client
       for action in actions
-        data[action] = @client[action].toString() if @client.hasOwnProperty(action)
-    
-    @broadcast "watch", data
-  
-  constructor: ->
-    args      = Array.prototype.slice.call(arguments, 0, arguments.length)
-    methods   = args.pop()
-    methods   = methods.call(@) if typeof methods == "function"
-    args = args[0] if args[0] instanceof Array
-    @patterns = []
-    for arg in args
-      @patterns.push if typeof arg == "string" then new RegExp(arg) else arg
-    @[key]    = value for key, value of methods
+        data[action] = "(#{client[action].toString()})" if client.hasOwnProperty(action)
+        
+    data
   
   class @DSL
+    constructor: ->
+      Watcher._store = undefined
+    
     ignorePaths: ->
       args = Array.prototype.slice.call(arguments, 0, arguments.length)
       

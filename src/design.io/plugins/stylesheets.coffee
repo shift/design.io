@@ -2,16 +2,15 @@ Shift = require 'shift'
 _path = require 'path'
 fs    = require 'fs'
 
-module.exports = (options = {}) ->
-  patterns = options.patterns || [/\.(styl|less|css|sass|scss)$/]
+module.exports = ->
+  args    = Array.prototype.slice.call(arguments, 0, arguments.length)
+  options = if typeof args[args.length - 1] == "object" then args.pop() else {}
+  args[0] = /\.(styl|less|css|sass|scss)$/ unless args.length > 0
   
   if options.hasOwnProperty("compress") && options.compress == true
     compressor = new Shift.YuiCompressor
   
-  Watcher.create patterns,
-    create: (path) ->
-      @update(path)
-    
+  Watcher.create args,
     update: (path) ->
       self = @
       
@@ -24,30 +23,28 @@ module.exports = (options = {}) ->
             if compressor
               compressor.render result, (error, result) ->
                 return self.error(error) if error
-                self.broadcast id: self.toId(path), path: path, body: result
+                self.broadcast body: result
             else
-              self.broadcast id: self.toId(path), path: path, body: result
+              self.broadcast body: result
         else
           if compressor
             compressor.render result, (error, result) ->
               return self.error(error) if error
-              self.broadcast path: path, body: result, id: self.toId(path)
-          self.broadcast id: self.toId(path), path: path, body: result
+              self.broadcast body: result
+          self.broadcast body: result
       true
-        
-    delete: (path) ->
-      @broadcast id: @toId(path), path: path
     
     client:
+      connect: ->
+        @stylesheets = {}
+      
       # this should get better so it knows how to map template files to browser files
       update: (data) ->
-        stylesheets = @stylesheets ||= {}
+        stylesheets = @stylesheets
         stylesheets[data.id].remove() if stylesheets[data.id]?
         node = $("<style id='#{data.id}' type='text/css'>#{data.body}</style>")
         stylesheets[data.id] = node
         $("body").append(node)
       
       delete: (data) ->
-        stylesheets[data.id].remove() if stylesheets[data.id]?
-        
-    server: {}
+        @stylesheets[data.id].remove() if @stylesheets[data.id]?

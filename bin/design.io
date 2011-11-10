@@ -1,3 +1,3 @@
 #!/usr/bin/env node
 
-require('../lib/design.io.js')
+require('../lib/design.io/process.js.js')

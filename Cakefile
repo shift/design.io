@@ -27,5 +27,6 @@ task 'build', ->
   
   fs.readFile "./src/design.io/client.coffee", "utf-8", (error, result) ->
     engine.render result, (error, result) ->
-      compressor.render result, (error, result) ->
-        fs.writeFile "design.io.js", result
+      fs.writeFile "design.io.js", result
+      compressor.render result, (error, compressed) ->
+        fs.writeFile "design.io.min.js", compressed

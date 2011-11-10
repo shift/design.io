@@ -1,14 +1,13 @@
 class window.DesignIO
   constructor: (options) ->
     options     ||= {}
-    @port         = options.port  || 4181
-    @url          = options.url   || "http://localhost:#{@port}"
-    @socket       = io.connect(@url)
     @callbacks    = {}
-    
     @stylesheets  = {}
     @javascripts  = {}
     @watchers     = []
+    @port         = options.port  || 4181
+    @url          = options.url   || "#{window.location.protocol}://#{window.location.hostname}:#{@port}"
+    @socket       = io.connect(@url)
     
     @connect()
     
@@ -19,50 +18,46 @@ class window.DesignIO
       socket.emit 'userAgent', self.userAgent()
       socket.on 'watch', (data) ->
         self.watch(data)
-      socket.on 'change', (data) ->
-        self.change(data)
+      socket.on 'exec', (data) ->
+        self.exec(data)
   
   # on "ready"  
   on: (name, callback) ->
     @callbacks[name] = callback
     
   runCallback: (name, data) ->
-    @callbacks[name](data) if @callbacks[name]
+    @callbacks[name].call(@, data) if @callbacks[name]
     true
     
   watch: (data) ->
-    watcher = {}
-    actions = ["create", "update", "delete"]
-    for action in actions
-      watcher[action] = eval("(#{data[action]})") if data.hasOwnProperty(action)
+    watchers  = data.body
+    actions   = ["create", "update", "delete"]
     
-    patterns = []
-    for pattern in data.patterns
-      patterns.push new RegExp(pattern.pattern, pattern.options)
-    watcher.patterns = patterns
-    watcher.match = (path) ->
-      for pattern in @patterns
-        return true if pattern.exec(path)
-      return false
+    for watcher in watchers
+      watcher.match = eval(watcher.match)
       
-    @watchers.push(watcher)
+      for action in actions
+        watcher[action] = eval(watcher[action]) if watcher.hasOwnProperty(action)
+      
+      for pattern, i in watcher.patterns
+        watcher.patterns[i] = new RegExp(pattern.source, pattern.options)
     
-    @runCallback "watch", data
+    @watchers = watchers
   
-  change: (data) ->
+  exec: (data) ->
     watchers = @watchers
     for watcher in watchers
       if watcher.match(data.path)
         watcher[data.action].call(@, data) if watcher.hasOwnProperty(data.action)
         
-    @runCallback "change", data
+    @runCallback data.action, data
   
-  log: (msg) ->
-    if typeof(msg) == "object"
-      msg.userAgent = window.navigator.userAgent
-      msg.url       = window.location.href
+  log: (data) ->
+    if typeof(data) == "object"
+      data.userAgent = window.navigator.userAgent
+      data.url       = window.location.href
 
-    @socket.emit 'log', msg
+    @socket.emit 'log', data
   
   userAgent: ->
     userAgent:  window.navigator.userAgent

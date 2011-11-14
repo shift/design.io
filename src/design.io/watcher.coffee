@@ -9,13 +9,16 @@ class Watcher
     @watchfile  = options.watchfile
     @port       = options.port
     @url        = options.url
+    @logger     = require('../design.io').logger
     
     throw new Error("You must specify the watchfile") unless @watchfile
     throw new Error("You must specify the directory to watch") unless @directory
     
     @read ->
-      require('watch-node')(@directory, (path, prev, curr, action, timestamp) -> Watcher.exec(path, action))
-       
+      listener = new (require('./listener/mac'))(options.directory)
+      listener.listen (path, options) -> 
+        Watcher.exec(path, options)
+      
     @
     
   @read: (callback) ->
@@ -63,23 +66,25 @@ class Watcher
     data
     
   @replacer: (key, value) ->
-    if typeof value == "function"
+    if typeof value == "function" || value instanceof RegExp
       "(#{value})"
     else
       value
   
   @reviver: (key, value) ->
     if typeof value == "string" && 
-      # match start of function or regexp
-      !!value.match(/^(\(?:function\s*\(\)\s*\{|\(\/)/) && 
-      # match end of function or regexp
-      !!value.match(/(?:\}\s*\)|\/\w*\))$/)
+    # match start of function or regexp
+    !!value.match(/^(?:\(function\s*\([^\)]*\)\s*\{|\(\/)/) && 
+    # match end of function or regexp
+    !!value.match(/(?:\}\s*\)|\/\w*\))$/)
       eval(value)
     else
       value
     
-  @exec: (path, action, timestamp) ->
+  @exec: (path, options = {}) ->
     watchers  = @all()
+    action    = options.action
+    timestamp = options.timestamp
     
     for watcher in watchers
       if watcher.match(path)
@@ -87,19 +92,23 @@ class Watcher
         watcher.action    = action
         watcher.timestamp = timestamp
         
-        success           = !!watcher[action](path)
+        try
+          success           = !!watcher[action].call(watcher, path, options)
+        catch error
+          console.log error
+        # make async
+        # delete watcher.path
+        # delete watcher.action
+        # delete watcher.timestamp
         
-        delete watcher.path
-        delete watcher.action
-        delete watcher.timestamp
-        
-        break unless success
+        #break unless success
   
   @broadcast: (action, data) ->
+    replacer = @replacer
     params  =
       url:      "#{@url}/design.io/#{action}"
       method:   "POST"
-      body:     JSON.stringify(data, @replacer)
+      body:     JSON.stringify(data, replacer)
       headers:
         "Content-Type": "application/json"
     
@@ -108,9 +117,13 @@ class Watcher
         #console.log(body)
         true
       else
-        console.log error
+        if error
+          console.log error
+        else
+          console.log response.body
   
   constructor: ->
+    @logger   = @constructor.logger
     args      = Array.prototype.slice.call(arguments, 0, arguments.length)
     methods   = args.pop()
     methods   = methods.call(@) if typeof methods == "function"
@@ -138,7 +151,7 @@ class Watcher
     @broadcast()
     
   error: (error) ->
-    console.log error
+    @constructor.logger.error if error.hasOwnProperty("message") then error.message else error.toString()
     false
     
   toId: (path) ->

@@ -15,23 +15,14 @@ module.exports = ->
       self = @
       
       fs.readFile path, 'utf-8', (error, result) ->
-        engine = Shift.engine(_path.extname(path))
-        
-        if engine
-          engine.render result, (error, result) ->
-            return self.error(error) if error
-            if compressor
-              compressor.render result, (error, result) ->
-                return self.error(error) if error
-                self.broadcast body: result
-            else
-              self.broadcast body: result
-        else
+        Shift.render path: path, string: result, (error, output) ->
+          return self.error(error) if error
           if compressor
-            compressor.render result, (error, result) ->
+            compressor.render output, (error, result) ->
               return self.error(error) if error
               self.broadcast body: result
-          self.broadcast body: result
+          else
+            self.broadcast body: output
     
     client:
       update: (data) ->

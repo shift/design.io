@@ -26,9 +26,16 @@
   "engines": { "node": ">= 0.4.0" },
   "bin": { "design.io": "./bin/design.io" },
   "dependencies": {
-    "watch-node":         ">= 0.1.5",
-    "commander":          ">= 0.3.2",
-    "socket.io":          ">= 0.8.6",
-    "request":            ">= 2.1.1"
+    "commander":      ">= 0.3.2",
+    "socket.io":      ">= 0.8.6",
+    "request":        ">= 2.1.1",
+    "pathfinder":     ">= 0.1.5",
+    "shift":          ">= 0.1.8",
+    "async":          ">= 0.1.15",
+    "common-logger":  ">= 0.2.0"
+  },
+  "scripts": {
+      "install": "gem install rb-fsevent --no-ri --no-rdoc"
+    }
   }
 }

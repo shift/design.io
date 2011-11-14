@@ -6,7 +6,7 @@ class window.DesignIO
     @javascripts  = {}
     @watchers     = []
     @port         = options.port  || 4181
-    @url          = options.url   || "#{window.location.protocol}://#{window.location.hostname}:#{@port}"
+    @url          = options.url   || "#{window.location.protocol}//#{window.location.hostname}:#{@port}/design.io"
     @socket       = io.connect(@url)
     
     @connect()
@@ -17,9 +17,10 @@ class window.DesignIO
     socket.on 'connect', ->
       socket.emit 'userAgent', self.userAgent()
       socket.on 'watch', (data) ->
-        self.watch JSON.parse(data, @reviver)
+        console.log data
+        self.watch JSON.parse(data, self.reviver)
       socket.on 'exec', (data) ->
-        self.exec JSON.parse(data, @reviver)
+        self.exec JSON.parse(data, self.reviver)
   
   # on "create"
   on: (name, callback) ->
@@ -60,10 +61,8 @@ class window.DesignIO
   
   reviver: (key, value) ->
     if typeof value == "string" && 
-      # match start of function or regexp
-      !!value.match(/^(\(?:function\s*\(\)\s*\{|\(\/)/) && 
-      # match end of function or regexp
-      !!value.match(/(?:\}\s*\)|\/\w*\))$/)
+    !!value.match(/^(?:\(function\s*\([^\)]*\)\s*\{|\(\/)/) && 
+    !!value.match(/(?:\}\s*\)|\/\w*\))$/)
       eval(value)
     else
       value

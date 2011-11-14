@@ -1,3 +1,8 @@
 #watcher "stylesheet", extensions: [".styl", ".less", ".sass", ".css"]
-require("./watcher/stylesheets")(compress: true)
-require("./watcher/javascripts")()
+require("./extensions/stylesheets")(compress: true)
+require("./extensions/javascripts")()
+require("./extensions/templates")()
+
+watch /\.mustache/
+  update: (path) ->
+    @logger.info "Mustache Template: #{path}"

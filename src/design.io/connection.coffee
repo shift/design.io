@@ -11,6 +11,7 @@ module.exports = (portOrIo) ->
   
   designer.on "connection", (socket) ->
     socket.on "userAgent", (data) ->
+      console.log data
       socket.set "userAgent", data, ->
         socket.emit "ready"
         Watcher.connect()

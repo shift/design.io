@@ -29,6 +29,8 @@ module.exports = ->
   outputPath  = options.outputPath
   writeMethod = options.write
   importPaths = options.paths || []
+  debug       = options.hasOwnProperty("debug") && options.debug == true
+  ignore      = options.ignore # for now it must be a regexp
   
   if options.hasOwnProperty("compress") && options.compress == true
     compressor = new Shift.UglifyJS
@@ -49,6 +51,8 @@ module.exports = ->
         File.touch dependentPath
   
   Watcher.create args,
+    ignore: ignore
+    
     toSlug: (path) ->
       path.replace(process.cwd() + '/', '').replace(/[\/\.]/g, '-')
       
@@ -70,5 +74,7 @@ module.exports = ->
           touchDependencies(file)
         
     client:
+      debug: debug
       update: (data) ->
-        eval("(data.body)")
+        console.log data.body if @debug
+        eval("(function() { #{data.body} })")()

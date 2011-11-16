@@ -42,7 +42,7 @@ class Watcher
         
         eval("(#{context})").call(new Watcher.Watchfile)
         
-        callback.call(@) if callback
+        callback.call(self) if callback
   
   @store: ->
     @_store ||= []
@@ -148,6 +148,7 @@ class Watcher
     methods   = args.pop()
     methods   = methods.call(@) if typeof methods == "function"
     args = args[0] if args[0] instanceof Array
+    @ignore   = null
     @patterns = []
     for arg in args
       @patterns.push if typeof arg == "string" then new RegExp(arg) else arg
@@ -173,11 +174,15 @@ class Watcher
   destroy: ->
     @broadcast()
     
+  updateAll: ->
+    Watcher.update()
+    
   error: (error) ->
     _console.error if error.hasOwnProperty("message") then error.message else error.toString()
     false
     
   match: (path) ->
+    return false if @ignore && !!@ignore.exec(path)
     patterns = @patterns
     for pattern in patterns
       return true if !!pattern.exec(path)
@@ -201,10 +206,10 @@ class Watcher
       id:       @id
       
     if @hasOwnProperty("client")
-      actions = ["create", "update", "destroy", "connect"]
+      # actions = ["create", "update", "destroy", "connect"]
       client  = @client
-      for action in actions
-        data[action] = client[action] if client.hasOwnProperty(action)
+      for key, value of client
+        data[key] = value#client[action] if client.hasOwnProperty(action)
         
     data
   

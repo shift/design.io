@@ -15,6 +15,7 @@ File  = Pathfinder.File
 #       outputPath: (path) -> "./public/#{path}"
 #       lookup:     File.directories(process.cwd())
 #       compress:   false
+#       ignore:     "./public"
 #       write:      (path, string) -> # make your own!
 #         File.write(@outputPath(path), string)
 #         File.write(File.pathWithDigest(path), string)
@@ -29,6 +30,8 @@ module.exports = ->
   outputPath  = options.outputPath
   writeMethod = options.write
   importPaths = options.paths || []
+  debug       = options.hasOwnProperty("debug") && options.debug == true
+  ignore      = options.ignore # for now it must be a regexp
   
   if options.hasOwnProperty("compress") && options.compress == true
     compressor = new Shift.YuiCompressor
@@ -49,6 +52,8 @@ module.exports = ->
         File.touch dependentPath
   
   Watcher.create args,
+    ignore: ignore
+  
     toSlug: (path) ->
       path.replace(process.cwd() + '/', '').replace(/[\/\.]/g, '-')
       

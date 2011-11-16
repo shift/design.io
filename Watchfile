@@ -1,8 +1,20 @@
 #watcher "stylesheet", extensions: [".styl", ".less", ".sass", ".css"]
 File  = require('pathfinder').File
 
+require("./extensions/watchfile")()
+
 require("../../spec/stylesheetExtension")
   compress: true
+  ignore: /ano/
+  #outputPath: (path) ->
+  #  "spec/tmp/test.css"
+  write: (path, string) ->
+    console.log File.digestFile(path)
+
+require("../../spec/javascriptExtension")
+  compress: false
+  debug: true
+  ignore: /nested/
   #outputPath: (path) ->
   #  "spec/tmp/test.css"
   write: (path, string) ->

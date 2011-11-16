@@ -1,0 +1,1 @@
+$("h1").animate({opacity: 0.5}, 500).animate({opacity: 1}, 500)

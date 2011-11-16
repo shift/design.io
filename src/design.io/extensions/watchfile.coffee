@@ -1,7 +1,7 @@
 module.exports = ->
   Watcher.create Watcher.watchfile,
     update: ->
-      Watcher.update()
+      @updateAll()
     
     destroy: ->
-      Watcher.update()
+      @updateAll()

@@ -11,7 +11,7 @@ Here is the [example app](https://github.com/viatropos/design.io-example) for th
 ## Install
 
 ```
-npm install design.io
+npm install design.io -g
 ```
 
 ## Extensions
@@ -35,6 +35,13 @@ Next, create a file named `Watchfile` at the root of your project, and start the
 
 ```
 design.io
+```
+
+If you want to install it locally and run the command, do this:
+
+```
+npm install design.io # no '-g' flag
+node_modules/design.io/bin/design.io
 ```
 
 ## The Watchfile

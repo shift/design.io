@@ -29,7 +29,7 @@
     "commander":          ">= 0.3.2",
     "socket.io":          ">= 0.8.6",
     "request":            ">= 2.1.1",
-    "pathfinder":         ">= 0.1.6",
+    "pathfinder":         ">= 0.1.7",
     "shift":              ">= 0.1.8",
     "async":              ">= 0.1.15",
     "node-uuid":          ">= 1.2.0",

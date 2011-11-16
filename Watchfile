@@ -3,21 +3,19 @@ File  = require('pathfinder').File
 
 require("./extensions/watchfile")()
 
-#require("../../spec/stylesheetExtension")
-require("design.io-stylesheets")
-  compress: true
-  ignore: /ano/
-  #outputPath: (path) ->
-  #  "spec/tmp/test.css"
-  write: (path, string) ->
-    console.log File.digestFile(path)
+#require("design.io-stylesheets")
+require("../../spec/stylesheetExtension")
+  compress: false
+  outputPath: (path) ->
+    "spec/tmp/test.css"
+  #write: (path, string) ->
+  # console.log File.digestFile(path)
 
 #require("../../spec/javascriptExtension")
 require("design.io-javascripts")
   compress: false
   debug: true
-  ignore: /nested/
-  #outputPath: (path) ->
-  #  "spec/tmp/test.css"
-  write: (path, string) ->
-    console.log File.digestFile(path)
+  outputPath: (path) ->
+    "spec/tmp/test.js"
+  #write: (path, string) ->
+  #  console.log File.digestFile(path)

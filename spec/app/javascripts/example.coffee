@@ -1,3 +1,6 @@
 $("h1").text "Hello again"
 
-# @import './nested-example'
+($ ->
+  ->
+    # @import './nested-example'
+)

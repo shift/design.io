@@ -1,23 +1,25 @@
-fs      = require 'fs'
-path    = require 'path'
-Shift   = require 'shift'
-request = require 'request'
+fs          = require 'fs'
+path        = require 'path'
+uuid        = require 'node-uuid'
+Shift       = require 'shift'
+request     = require 'request'
+Pathfinder  = require 'pathfinder'
+require 'underscore.logger'
 
 class Watcher
   @initialize: (options = {}) ->
     @directory  = options.directory
+    @pathfinder = new Pathfinder(@directory)
     @watchfile  = options.watchfile
     @port       = options.port
     @url        = options.url
-    @logger     = require('../design.io').logger
     
     throw new Error("You must specify the watchfile") unless @watchfile
     throw new Error("You must specify the directory to watch") unless @directory
     
     @read ->
-      listener = new (require('./listener/mac'))(options.directory)
-      listener.listen (path, options) -> 
-        Watcher.exec(path, options)
+      new (require('./listener/mac')) Watcher.pathfinder.root, (path, options) -> 
+        Watcher.changed(path, options)
       
     @
     
@@ -81,7 +83,7 @@ class Watcher
     else
       value
     
-  @exec: (path, options = {}) ->
+  @changed: (path, options = {}) ->
     watchers  = @all()
     action    = options.action
     timestamp = options.timestamp
@@ -93,15 +95,34 @@ class Watcher
         watcher.timestamp = timestamp
         
         try
-          success           = !!watcher[action].call(watcher, path, options)
+          !!watcher[action](path, options)
         catch error
-          console.log error
+          _console.error error.toString()
         # make async
         # delete watcher.path
         # delete watcher.action
         # delete watcher.timestamp
         
         #break unless success
+        
+  @log: (data) ->
+    watchers = @all()
+    path      = data.path
+    action    = data.action
+    timestamp = data.timestamp
+    
+    for watcher in watchers
+      if watcher.hasOwnProperty("server") && 
+      watcher.server.hasOwnProperty(action) && 
+      watcher.id == data.id
+        server.watcher   = watcher
+        server.path      = path
+        server.action    = action
+        server.timestamp = timestamp
+        try
+          !!server[action](data)
+        catch error
+          _console.error error.toString()
   
   @broadcast: (action, data) ->
     replacer = @replacer
@@ -118,12 +139,11 @@ class Watcher
         true
       else
         if error
-          console.log error
+          _console.error error.toString()
         else
-          console.log response.body
+          _console.error response.body
   
   constructor: ->
-    @logger   = @constructor.logger
     args      = Array.prototype.slice.call(arguments, 0, arguments.length)
     methods   = args.pop()
     methods   = methods.call(@) if typeof methods == "function"
@@ -132,6 +152,9 @@ class Watcher
     for arg in args
       @patterns.push if typeof arg == "string" then new RegExp(arg) else arg
     @[key]    = value for key, value of methods
+    
+    @id     ||= uuid()
+    @server.watcher = @ if @hasOwnProperty("server")
   
   # Example:
   # 
@@ -147,15 +170,12 @@ class Watcher
       return self.error(error) if error
       self.broadcast body: result
     
-  delete: ->
+  destroy: ->
     @broadcast()
     
   error: (error) ->
-    @constructor.logger.error if error.hasOwnProperty("message") then error.message else error.toString()
+    _console.error if error.hasOwnProperty("message") then error.message else error.toString()
     false
-    
-  toId: (path) ->
-    path.replace(process.cwd() + '/', '').replace(/[\/\.]/g, '-')
     
   match: (path) ->
     patterns = @patterns
@@ -169,7 +189,7 @@ class Watcher
     data          = args.pop() || {}
     data.action ||= @action
     data.path   ||= @path
-    data.id     ||= @toId(data.path)
+    data.id       = @id
     action        = args.shift() || "exec"
     
     @constructor.broadcast action, data
@@ -178,9 +198,10 @@ class Watcher
     data    = 
       patterns: @patterns
       match:    @match
+      id:       @id
       
     if @hasOwnProperty("client")
-      actions = ["create", "update", "delete"]
+      actions = ["create", "update", "destroy", "connect"]
       client  = @client
       for action in actions
         data[action] = client[action] if client.hasOwnProperty(action)
@@ -196,9 +217,5 @@ class Watcher
       
     watch: ->
       Watcher.create(arguments...)
-    
-    # for plugins, like Guard, TODO
-    watcher: (name, options = {}) ->
-      require("design.io-#{name}")(options)
 
 module.exports = Watcher

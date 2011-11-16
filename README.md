@@ -74,6 +74,12 @@ app.post '/design.io/:action', (request, response) ->
   response.send request.params.action
 ```
 
+## Possibilities
+
+- Incrementing values with keyboard and swipe pad in textmate.  http://old.nabble.com/Incremental-Sequences-for-Replacement-td27741019.html
+- http://stackoverflow.com/questions/3459476/how-to-append-to-a-file-in-node
+- http://francisshanahan.com/index.php/2011/stream-a-webcam-using-javascript-nodejs-android-opera-mobile-web-sockets-and-html5/
+
 ## License
 
 (The MIT License)

@@ -3,5 +3,5 @@ module.exports = ->
     update: ->
       Watcher.update()
     
-    delete: ->
+    destroy: ->
       Watcher.update()

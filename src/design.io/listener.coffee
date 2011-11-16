@@ -3,27 +3,19 @@ Pathfinder      = require 'pathfinder'
 File            = Pathfinder.File
 
 class Listener
-  constructor: (root, options = {}) ->
+  constructor: (root, callback) ->
     @root         = root
-    @directories  = {}
-    @files        = {}
-    @logger       = require('../design.io').logger
+    @directories  = directories = {}
+    @files        = files       = {}
+    paths         = require('findit').sync(root)
     
-  listen: (callback) ->
-    files = @files
-    root  = @root
-    paths = require('findit').sync(root)
     for source in paths
-      stat = File.stat(source)
+      stat        = File.stat(source)
+      path        = _path.join(root, source.replace(root, ""))
       unless stat.isDirectory()
-        files[_path.join(root, source.replace(root, ""))] = stat
-    
-  log: (path, options = {}, callback) ->
-    @logger.info "#{options.action}d #{path}" # #{options.timestamp.toLocaleTimeString()} - 
-    try
-      callback.call(@, path, options)
-    catch error
-      @logger.error error.message
+        files[path]       = stat
+      else
+        directories[path] = File.entries(path)
   
   changed: (path, callback) ->
     entries     = File.entries(path)
@@ -35,7 +27,7 @@ class Listener
     
     if directories[path] && entries.length < directories[path].length
       directories       = @directories
-      action            = "delete"
+      action            = "destroy"
       deleted           = directories[path].filter (i) -> !(entries.indexOf(i) > -1)
       directories[path] = entries
       relativePath      = File.join(path, deleted[0]).replace(base + '/', '')
@@ -69,6 +61,14 @@ class Listener
       relativePath  = absolutePath.replace(base.toString() + '/', '')
       
       @log relativePath, action: action, timestamp: timestamp, previous: previous, current: current, callback
+  
+  log: (path, options = {}, callback) ->
+    name = if options.action == "destroy" then "deleted" else "#{options.action}d"
+    _console.info "#{name} #{path}" # #{options.timestamp.toLocaleTimeString()} - 
+    try
+      callback.call(@, path, options)
+    catch error
+      _console.error error.message
   
 require './listener/mac'
 require './listener/polling'

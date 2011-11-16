@@ -2,8 +2,6 @@ class window.DesignIO
   constructor: (options) ->
     options     ||= {}
     @callbacks    = {}
-    @stylesheets  = {}
-    @javascripts  = {}
     @watchers     = []
     @port         = options.port  || 4181
     @url          = options.url   || "#{window.location.protocol}//#{window.location.hostname}:#{@port}/design.io"
@@ -17,10 +15,9 @@ class window.DesignIO
     socket.on 'connect', ->
       socket.emit 'userAgent', self.userAgent()
       socket.on 'watch', (data) ->
-        console.log data
-        self.watch JSON.parse(data, self.reviver)
+        self.watch data
       socket.on 'exec', (data) ->
-        self.exec JSON.parse(data, self.reviver)
+        self.exec data
   
   # on "create"
   on: (name, callback) ->
@@ -31,17 +28,31 @@ class window.DesignIO
     true
     
   watch: (data) ->
-    @watchers = data.body
+    @watchers = watchers = JSON.parse(data, @reviver).body
+    for watcher in watchers
+      watcher.client = @
+      watcher.log = (data) ->
+        data.path       ||= @path
+        data.action     ||= @action
+        data.timestamp  ||= new Date
+        data.id           = @id
+        @client.log(data)
+      watcher.connect() if watcher.hasOwnProperty("connect")
   
   exec: (data) ->
+    data    = JSON.parse(data, @reviver)
+    
     watchers = @watchers
     
     for watcher in watchers
-      if watcher.match(data.path)
-        watcher[data.action].call(@, data) if watcher.hasOwnProperty(data.action)
+      if watcher.id == data.id
+        watcher.path    = data.path # tmp set
+        watcher.action  = data.action
+        watcher[data.action](data) if watcher.hasOwnProperty(data.action)
         
     @runCallback data.action, data
   
+  # id, path, then anything else
   log: (data) ->
     if typeof(data) == "object"
       data.userAgent = window.navigator.userAgent

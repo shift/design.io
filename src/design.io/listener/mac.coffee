@@ -1,13 +1,12 @@
-fs              = require 'fs'
+{spawn, exec}   = require 'child_process'
 # https://github.com/thibaudgg/rb-fsevent
 
 class Mac extends (require('../listener'))
-  listen: (callback) ->
-    super(callback)
+  constructor: (pathfinder, callback) ->
+    super(pathfinder)
     
     self = @
     
-    {spawn, exec}   = require 'child_process'
     command   = spawn 'ruby', ["#{__dirname}/mac.rb"]
     command.stdout.setEncoding('utf8')
     command.stdout.on 'data', (data) -> 
@@ -15,20 +14,8 @@ class Mac extends (require('../listener'))
       self.changed(data, callback)
     command.stdout.setEncoding('utf8')
     command.stderr.on 'data', (data) -> 
-      require('../../design.io').logger.error data.toString().trim()
+      _console.error data.toString().trim()
     command.stdin.write @root
     command.stdin.end()
-  #listen: (callback) ->
-  # FSEvents        = require("fsevents")
-  #  self        = @
-  #  global.fse  = new FSEvents(@root)
-  #  
-  #  fse.on "change", (path, flags, evtid) ->
-  #    self.changed(path)
-  #    
-  #    if fs.statSync("stop")
-  #      console.log "Stop"
-  #      fs.unlinkSync "stop"
-  #      fse.stop()
-
+    
 module.exports = Mac

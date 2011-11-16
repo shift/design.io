@@ -1,8 +1,9 @@
 #watcher "stylesheet", extensions: [".styl", ".less", ".sass", ".css"]
-require("./extensions/stylesheets")(compress: true)
-require("./extensions/javascripts")()
-require("./extensions/templates")()
+File  = require('pathfinder').File
 
-watch /\.mustache/
-  update: (path) ->
-    @logger.info "Mustache Template: #{path}"
+require("../../spec/stylesheetExtension")
+  compress: true
+  #outputPath: (path) ->
+  #  "spec/tmp/test.css"
+  write: (path, string) ->
+    console.log File.digestFile(path)

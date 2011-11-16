@@ -10,15 +10,14 @@ module.exports = (portOrIo) ->
   designer  = io.of("/design.io")
   
   designer.on "connection", (socket) ->
-    console.log 'passed it!'
     socket.on "userAgent", (data) ->
       socket.set "userAgent", data, ->
         socket.emit "ready"
         Watcher.connect()
         true
     
-    socket.on "log", (msg) ->
-      console.log msg
+    socket.on "log", (data) ->
+      Watcher.log(data)
       true
     
     socket.on "disconnect", ->

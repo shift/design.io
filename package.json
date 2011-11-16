@@ -1,6 +1,6 @@
 {
   "name": "design.io",
-  "version": "0.2.0",
+  "version": "0.2.1",
   "description": "Design and Test Your App in Real-Time from TextMate",
   "homepage": "http://github.com/viatropos/design.io",
   "main": "lib/design.io.js",
@@ -26,16 +26,16 @@
   "engines": { "node": ">= 0.4.0" },
   "bin": { "design.io": "./bin/design.io" },
   "dependencies": {
-    "commander":      ">= 0.3.2",
-    "socket.io":      ">= 0.8.6",
-    "request":        ">= 2.1.1",
-    "pathfinder":     ">= 0.1.5",
-    "shift":          ">= 0.1.8",
-    "async":          ">= 0.1.15",
-    "common-logger":  ">= 0.2.0"
+    "commander":          ">= 0.3.2",
+    "socket.io":          ">= 0.8.6",
+    "request":            ">= 2.1.1",
+    "pathfinder":         ">= 0.1.6",
+    "shift":              ">= 0.1.8",
+    "async":              ">= 0.1.15",
+    "node-uuid":          ">= 1.2.0",
+    "underscore.logger":  ">= 0.3.1"
   },
   "scripts": {
-      "install": "gem install rb-fsevent --no-ri --no-rdoc"
-    }
+    "install": "gem install rb-fsevent --no-ri --no-rdoc"
   }
 }

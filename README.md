@@ -14,21 +14,36 @@ Here is the [example app](https://github.com/viatropos/design.io-example) for th
 npm install design.io
 ```
 
+## Extensions
+
+- [design.io-stylesheets](https://github.com/viatropos/design.io-stylesheets)
+- [design.io-javascripts](https://github.com/viatropos/design.io-javascripts)
+
 ## Usage
+
+Add the [design.io.js](https://raw.github.com/viatropos/design.io/master/design.io.js) client to your html head.  You also need jQuery, and [Socket.IO](http://socket.io/).
+
+``` html
+<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.0/jquery.min.js"></script>
+<script type="text/javascript" src="/javascripts/socket.io.js"></script>
+<script type="text/javascript" src="/javascripts/design.io.js"></script>
+```
+
+You can just [grab socket.io from here](https://raw.github.com/viatropos/design.io/master/spec/app/javascripts/socket.io.js) as well.
+
+Next, create a file named `Watchfile` at the root of your project, and start the watcher with this command:
 
 ```
 design.io
 ```
 
-That `design.io -d [directory]` command will watch a directory for changes and inject JavaScripts and StyleSheets into the LIVE example web app whenever you hit save.  It does it in a clean an optimized way.
+## The Watchfile
 
-So, edit the files in `./src` and watch the stuff in the page change in real time.
-
-## Watchfile
-
-This is what a blank `watch` task looks like:
+This is what a blank `watch` task looks like in a Watchfile:
 
 ``` coffeescript
+# ./Watchfile
+
 watch /\.(styl|less|sass|scss|css)$/
   create: (path) ->
     @update(path)
@@ -40,11 +55,22 @@ watch /\.(styl|less|sass|scss|css)$/
   client:
     # id, path, body
     create: (data) ->
-  
+      # this is in the browser's context!
+    
     update: (data) ->
       
     delete: (data) ->
       
+```
+
+You can update the Watchfile and the changes will be affected in real time by adding this extension:
+
+``` coffeescript
+# Watchfile
+
+require('design.io').extension('watchfile')()
+
+# ... more watchers
 ```
 
 ## Using Extensions

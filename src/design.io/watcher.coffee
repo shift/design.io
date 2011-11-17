@@ -88,30 +88,48 @@ class Watcher
     Watcher.change(change.path, change.options, callback)
   , 1)
   
+  @timeout: 10 * 1000
+  
   @change: (path, options, callback) ->
     watchers  = @all()
     action    = options.action
     timestamp = options.timestamp
+    self      = @
+    duration  = @timeout
     
     iterator  = (watcher, next) ->
       if watcher.match(path)
+        
         watcher.path      = path
         watcher.action    = action
         watcher.timestamp = timestamp
+      
+        watcherCallback   = (error) ->
+          clearTimeout(timeout)
+          console.log(error.stack) if error
+          process.nextTick(next)
+          
+        timeoutError = ->
+          watcherCallback(new Error("Watcher for #{watcher.patterns.toString()} timed out.  Make sure you have and call a callback in each watcher method (e.g. update: function(path, callback))"))
+        
+        timeout = setTimeout(timeoutError, duration)
         
         try
           switch watcher[action].length
-            when 1 then throw Error("You must specify a callback in your watcher")
-            when 2 then watcher[action].call(watcher, path, next)
-            when 3 then watcher[action].call(watcher, path, options, next)
+            when 0, 1
+              watcher[action].call watcher
+              watcherCallback()
+            when 2
+              watcher[action].call watcher, path, watcherCallback
+            when 3
+              watcher[action].call watcher, path, options, watcherCallback
         catch error
-          console.log(error.stack)
-          next()
+          watcherCallback(error)
         # make async
         # delete watcher.path
         # delete watcher.action
         # delete watcher.timestamp
-        
+      
         #break unless success
       else
         next()
@@ -179,6 +197,7 @@ class Watcher
     @server.watcher = @ if @hasOwnProperty("server")
     
   initialize: (path, callback) ->
+    callback()
   
   # Example:
   # 

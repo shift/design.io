@@ -12,6 +12,6 @@ server = spawn "node", [
   "--port", command.program.port
 ]
 server.stdout.on 'data', (data) -> 
-  console.log data.toString().trim()
+  # console.log data.toString().trim()
 server.stderr.on 'data', (data) -> 
   console.log data.toString().trim()

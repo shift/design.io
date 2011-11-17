@@ -8,12 +8,16 @@ class Listener
     @directories  = directories = {}
     @files        = files       = {}
     paths         = require('findit').sync(root)
-    
+    self          = @
     for source in paths
       stat        = File.stat(source)
       path        = _path.join(root, source.replace(root, ""))
       unless stat.isDirectory()
         files[path]       = stat
+        try
+          callback.call(self, File.relativePath(path), action: "initialize")
+        catch error
+          console.log error.stack
       else
         directories[path] = File.entries(path)
   
@@ -68,7 +72,7 @@ class Listener
     try
       callback.call(@, path, options)
     catch error
-      _console.error error.message
+      console.log error.stack
   
 require './listener/mac'
 require './listener/polling'

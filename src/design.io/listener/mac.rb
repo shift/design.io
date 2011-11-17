@@ -5,6 +5,6 @@ STDOUT.sync = true
 io          = STDOUT
 directory   = STDIN.read
 fsevent.watch directory do |directories|
-  io.write directories[0][0..-2]
+  io.write directories
 end
 fsevent.run

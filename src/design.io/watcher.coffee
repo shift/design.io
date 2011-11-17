@@ -1,6 +1,7 @@
 fs          = require 'fs'
 path        = require 'path'
 uuid        = require 'node-uuid'
+async       = require 'async'
 Shift       = require 'shift'
 request     = require 'request'
 Pathfinder  = require 'pathfinder'
@@ -82,28 +83,44 @@ class Watcher
       eval(value)
     else
       value
-    
-  @changed: (path, options = {}) ->
+      
+  @queue: async.queue((change, callback) ->
+    Watcher.change(change.path, change.options, callback)
+  , 1)
+  
+  @change: (path, options, callback) ->
     watchers  = @all()
     action    = options.action
     timestamp = options.timestamp
     
-    for watcher in watchers
+    iterator  = (watcher, next) ->
       if watcher.match(path)
         watcher.path      = path
         watcher.action    = action
         watcher.timestamp = timestamp
         
         try
-          !!watcher[action](path, options)
+          switch watcher[action].length
+            when 1 then throw Error("You must specify a callback in your watcher")
+            when 2 then watcher[action].call(watcher, path, next)
+            when 3 then watcher[action].call(watcher, path, options, next)
         catch error
-          _console.error error.toString()
+          console.log(error.stack)
+          next()
         # make async
         # delete watcher.path
         # delete watcher.action
         # delete watcher.timestamp
         
         #break unless success
+      else
+        next()
+        
+    async.forEachSeries watchers, iterator, (error) ->
+      process.nextTick(callback)
+  
+  @changed: (path, options = {}) ->
+    @queue.push path: path, options: options
         
   @log: (data) ->
     watchers = @all()
@@ -122,11 +139,13 @@ class Watcher
         try
           !!server[action](data)
         catch error
-          _console.error error.toString()
+          console.log(error.stack)
+          
   
-  @broadcast: (action, data) ->
-    replacer = @replacer
-    params  =
+  @broadcast: (action, data, callback) ->
+    self      = @
+    replacer  = @replacer
+    params    =
       url:      "#{@url}/design.io/#{action}"
       method:   "POST"
       body:     JSON.stringify(data, replacer)
@@ -135,13 +154,15 @@ class Watcher
     
     request params, (error, response, body) ->
       if !error && response.statusCode == 200
-        #console.log(body)
+        callback.call(self, null, response) if callback
         true
       else
-        if error
-          _console.error error.toString()
+        error = if error then error.stack else response.body
+        
+        if callback
+          callback.call(self, error, null)
         else
-          _console.error response.body
+          console.log(error)
   
   constructor: ->
     args      = Array.prototype.slice.call(arguments, 0, arguments.length)
@@ -156,29 +177,33 @@ class Watcher
     
     @id     ||= uuid()
     @server.watcher = @ if @hasOwnProperty("server")
+    
+  initialize: (path, callback) ->
   
   # Example:
   # 
   #     create: (path) ->
   #       ext = RegExp.$1
-  create: (path) ->
-    @update(path)
+  create: (path, callback) ->
+    @update(path, callback)
     
-  update: (path) ->
+  update: (path, callback) ->
     self = @
     
     fs.readFile path, 'utf-8', (error, result) ->
       return self.error(error) if error
-      self.broadcast body: result
+      self.broadcast body: result, callback
     
-  destroy: ->
-    @broadcast()
+  destroy: (path, callback) ->
+    @broadcast(callback)
     
   updateAll: ->
     Watcher.update()
     
-  error: (error) ->
-    _console.error if error.hasOwnProperty("message") then error.message else error.toString()
+  error: (error, callback) ->
+    #_console.error if error.hasOwnProperty("message") then error.message else error.toString()
+    require('util').puts(error.stack)
+    callback() if callback
     false
     
   match: (path) ->
@@ -191,13 +216,17 @@ class Watcher
   # send data to all browsers
   broadcast: ->
     args          = Array.prototype.slice.call(arguments, 0, arguments.length)
-    data          = args.pop() || {}
+    callback      = args.pop()
+    if typeof(callback) == "function"
+      data        = args.pop() || {}
+    else
+      data        = callback
+      callback    = null
     data.action ||= @action
     data.path   ||= @path
     data.id       = @id
     action        = args.shift() || "exec"
-    
-    @constructor.broadcast action, data
+    @constructor.broadcast action, data, callback
   
   toJSON: ->
     data    = 

@@ -117,7 +117,7 @@ class Watcher
         try
           switch watcher[action].length
             when 0, 1
-              watcher[action].call watcher
+              watcher[action].call watcher, path
               watcherCallback()
             when 2
               watcher[action].call watcher, path, watcherCallback
@@ -161,6 +161,10 @@ class Watcher
           
   
   @broadcast: (action, data, callback) ->
+    if data.action == "initialize"
+      callback.call(self, null, null) if callback
+      return
+      
     self      = @
     replacer  = @replacer
     params    =

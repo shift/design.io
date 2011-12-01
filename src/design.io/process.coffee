@@ -15,3 +15,5 @@ server.stdout.on 'data', (data) ->
   # console.log data.toString().trim()
 server.stderr.on 'data', (data) -> 
   console.log data.toString().trim()
+
+_console.info("Design.io started on port #{command.program.port}")

@@ -1,19 +1,28 @@
-{spawn, exec}  = require 'child_process'
-
 global._console ||= require('underscore.logger')
 
 command = new (require("#{__dirname}/command"))(process.argv)
-command.run()
 
-server = spawn "node", [
-  "#{__dirname}/server", 
-  "--watchfile", command.program.watchfile, 
-  "--directory", command.program.directory, 
-  "--port", command.program.port
-]
-server.stdout.on 'data', (data) -> 
-  # console.log data.toString().trim()
-server.stderr.on 'data', (data) -> 
-  console.log data.toString().trim()
+if command.program.command == "start"
+  forever = require("forever")
+  server = forever.start([
+      "node",
+      "#{__dirname}/server.js", 
+      "--watchfile", command.program.watchfile, 
+      "--directory", command.program.directory, 
+      "--port", command.program.port
+    ], {max: 1, silent: true, killTree: true})
 
-_console.info("Design.io started on port #{command.program.port}")
+  server.on "stdout", (data) ->
+    console.log data.toString().trim()
+  server.on "error", (error) ->
+    console.log error
+  server.on "exit", ->
+    console.log "EXIT"
+  server.on "start", (process, data) ->
+    @
+  server.on "stderr", (data) ->
+    _console.error data.toString().trim()
+  
+  forever.startServer(server)
+else
+  command.run()

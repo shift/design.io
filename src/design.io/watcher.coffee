@@ -5,13 +5,14 @@ async       = require 'async'
 Shift       = require 'shift'
 request     = require 'request'
 Pathfinder  = require 'pathfinder'
+File        = Pathfinder.File
 require 'underscore.logger'
 
 class Watcher
   @initialize: (options = {}) ->
     @directory  = options.directory
     @pathfinder = new Pathfinder(@directory)
-    @watchfile  = options.watchfile
+    @watchfile  = File.absolutePath(options.watchfile)
     @port       = options.port
     @url        = options.url
     
@@ -19,31 +20,34 @@ class Watcher
     throw new Error("You must specify the directory to watch") unless @directory
     
     @read ->
-      new (require('./listener/mac')) Watcher.pathfinder.root, (path, options) -> 
+      new (require('./listener/mac')) root: Watcher.pathfinder.root, ignore: Watcher.ignoredPaths, (path, options) -> 
         Watcher.changed(path, options)
       
     @
     
   @read: (callback) ->
-    self = @
-    
-    fs.readFile @watchfile, "utf-8", (error, result) ->
-      engine = new Shift.CoffeeScript
-      engine.render result, (error, result) ->
-        context = "
-        function() {
-          var watch       = this.watch;
-          var ignorePaths = this.ignorePaths;
-          var watcher     = this.watcher;
-          global.Watcher  = require('./watcher');
-          #{result}
-          delete global.Watcher
-        }
-        "
-        
-        eval("(#{context})").call(new Watcher.Watchfile)
-        
-        callback.call(self) if callback
+    Watcher.ignoredPaths = []
+    fs.readFile @watchfile, "utf-8", (error, result) =>
+      engine      = new Shift.CoffeeScript
+      mainModule  = require.main
+      paths       = mainModule.paths
+      mainModule.moduleCache and= {}
+      mainModule.filename = '.'
+      if process.binding('natives').module
+        {Module} = require 'module'
+        mainModule.paths = Module._nodeModulePaths(File.dirname(@watchfile))
+      engine.render result, (error, result) =>
+        context = """
+        global.Watcher  = require('design.io/lib/design.io/watcher');
+        var __watchfile = new Watcher.Watchfile();
+        var watch       = __watchfile.watch;
+        var ignorePaths = __watchfile.ignorePaths;
+        #{result}
+        delete global.Watcher
+        """
+        mainModule._compile context, mainModule.filename
+        #eval("(#{context})").call()
+        callback.call(@) if callback
   
   @store: ->
     @_store ||= []
@@ -69,7 +73,9 @@ class Watcher
     data
     
   @replacer: (key, value) ->
-    if typeof value == "function" || value instanceof RegExp
+    if value instanceof RegExp
+      "(function() { return new RegExp('#{value}') })"
+    else if typeof value == "function"
       "(#{value})"
     else
       value
@@ -270,7 +276,8 @@ class Watcher
       Watcher._store = undefined
     
     ignorePaths: ->
-      args = Array.prototype.slice.call(arguments, 0, arguments.length)
+      Watcher.ignoredPaths ||= []
+      Watcher.ignoredPaths = Watcher.ignoredPaths.concat Array.prototype.slice.call(arguments, 0, arguments.length)
       
     watch: ->
       Watcher.create(arguments...)

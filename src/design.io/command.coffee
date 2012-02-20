@@ -14,6 +14,7 @@ class Command
     program.watchfile ||= "Watchfile"
     program.port      = if program.port then parseInt(program.port) else (process.env.PORT || 4181)
     program.url       ||= "http://localhost:#{program.port}"
+    program.command   = program.args[0] || "watch"
     
   run: ->
     program = @program

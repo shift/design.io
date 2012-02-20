@@ -1,3 +1,4 @@
 #!/usr/bin/env node
 
-require('../lib/design.io/process.js')
+require.main.paths.push(process.cwd() + "/node_modules")
+require('design.io/lib/design.io/process.js')

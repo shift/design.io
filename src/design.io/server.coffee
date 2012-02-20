@@ -1,12 +1,10 @@
 command   = new (require("./command"))(process.argv)
-command.run()
+#command.run()
 
 io      = require('socket.io')
 express = require("express")
 connect = require('connect')
 Watcher = require("../../lib/design.io/watcher")
-
-#Watcher.initialize watchfile: "Watchfile", directory: process.cwd(), port: 4181, url: "http://localhost:4181"
 
 app     = express.createServer()
 
@@ -24,5 +22,8 @@ app.use connect.bodyParser()
 app.post '/design.io/:event', (request, response) ->
   designer.emit request.params.event, JSON.stringify(request.body)
   response.send request.params.event
+  
+app.get "design.io", (request, response) ->
+  
 
 _console.info "Design.io started on port #{command.program.port}"

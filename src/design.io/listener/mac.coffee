@@ -1,26 +1,26 @@
-{spawn, exec}   = require 'child_process'
-# https://github.com/thibaudgg/rb-fsevent
-
 class Mac extends (require('../listener'))
-  constructor: (pathfinder, callback) ->
-    super(pathfinder, callback)
+  constructor: (options, callback) ->
+    super
     
-    self = @
+    forever = require("forever")
     
-    command   = spawn 'ruby', ["#{__dirname}/mac.rb"]
-    command.stdout.setEncoding('utf8')
-    command.stdout.on 'data', (data) -> 
+    child = forever.start ["ruby","#{__dirname}/mac.rb", @root.replace(" ", "\\ ")],
+      max : 10
+      silent : true
+    
+    child.on "stdout", (data) =>
+      data = data.toString().trim()
       try
         data = JSON.parse("[" + data.replace(/\]\[/g, ",").replace(/[\[\]]/g, "") + "]")
         # console.log(data.toString().trim())
         for path in data
-          self.changed(path[0..-2], callback)
+          @changed(path[0..-2], callback)
       catch error
-        
-    command.stdout.setEncoding('utf8')
-    command.stderr.on 'data', (data) -> 
-      _console.error data.toString().trim()
-    command.stdin.write @root
-    command.stdin.end()
+        _console.error error.toString()
     
+    child.on "stderr", (data) ->
+      _console.error data.toString().trim()
+    
+    forever.startServer(child)
+      
 module.exports = Mac

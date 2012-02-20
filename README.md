@@ -12,6 +12,14 @@ Here is the [example app](https://github.com/viatropos/design.io-example) for th
 
 ```
 npm install design.io -g
+design.io start
+design.io stop
+```
+
+## Run
+
+```
+design.io
 ```
 
 ## Extensions
@@ -112,6 +120,10 @@ app.post '/design.io/:action', (request, response) ->
 - Incrementing values with keyboard and swipe pad in textmate.  http://old.nabble.com/Incremental-Sequences-for-Replacement-td27741019.html
 - http://stackoverflow.com/questions/3459476/how-to-append-to-a-file-in-node
 - http://francisshanahan.com/index.php/2011/stream-a-webcam-using-javascript-nodejs-android-opera-mobile-web-sockets-and-html5/
+
+## Resources
+
+- https://github.com/joyent/node/issues/search?q=fs.watch
 
 ## License
 

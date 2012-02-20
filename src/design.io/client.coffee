@@ -6,7 +6,6 @@ class window.DesignIO
     @port         = options.port  || 4181
     @url          = options.url   || "#{window.location.protocol}//#{window.location.hostname}:#{@port}/design.io"
     @socket       = io.connect(@url)
-    
     @connect()
     
   connect: ->

@@ -3,13 +3,16 @@ Pathfinder      = require 'pathfinder'
 File            = Pathfinder.File
 
 class Listener
-  constructor: (root, callback) ->
-    @root         = root
+  constructor: (options, callback) ->
+    @root         = options.root
+    @ignored      = options.ignore || []
     @directories  = directories = {}
     @files        = files       = {}
-    paths         = require('findit').sync(root)
+    paths         = File.glob(@root)
     self          = @
+    
     for source in paths
+      continue unless File.exists(source)
       stat        = File.stat(source)
       path        = _path.join(root, source.replace(root, ""))
       unless stat.isDirectory()
@@ -20,6 +23,11 @@ class Listener
           console.log error.stack
       else
         directories[path] = File.entries(path)
+        
+  ignore: (path) ->
+    for ignoredPath in @ignored
+      return true if path.indexOf(ignoredPath) == 0
+    return false
   
   changed: (path, callback) ->
     entries     = File.entries(path)
@@ -28,7 +36,7 @@ class Listener
     directories = @directories
     files       = @files
     base        = @root
-    
+    return if @ignore(path)
     if directories[path] && entries.length < directories[path].length
       directories       = @directories
       action            = "destroy"

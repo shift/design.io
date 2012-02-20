@@ -13,8 +13,6 @@ class Watcher
     @directory  = options.directory
     @pathfinder = new Pathfinder(@directory)
     @watchfile  = File.absolutePath(options.watchfile)
-    @port       = options.port
-    @url        = options.url
     
     throw new Error("You must specify the watchfile") unless @watchfile
     throw new Error("You must specify the directory to watch") unless @directory

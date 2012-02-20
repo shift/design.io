@@ -15,6 +15,9 @@ class Command
     program.port      = if program.port then parseInt(program.port) else (process.env.PORT || 4181)
     program.url       ||= "http://localhost:#{program.port}"
     program.command   = program.args[0] || "watch"
+    Watcher           = require('./watcher')
+    Watcher.port      = program.post
+    Watcher.url       = program.url
     
   run: ->
     program = @program
@@ -22,7 +25,5 @@ class Command
     require('./watcher').initialize
       watchfile:  program.watchfile
       directory:  program.directory
-      port:       program.port
-      url:        program.url
     
 module.exports = Command

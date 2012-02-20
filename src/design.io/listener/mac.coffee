@@ -5,8 +5,8 @@ class Mac extends (require('../listener'))
     forever = require("forever")
     
     child = forever.start ["ruby","#{__dirname}/mac.rb", @root.replace(" ", "\\ ")],
-      max : 10
-      silent : true
+      max:    10
+      silent: true
     
     child.on "stdout", (data) =>
       data = data.toString().trim()

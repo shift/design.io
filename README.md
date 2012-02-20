@@ -120,6 +120,7 @@ app.post '/design.io/:action', (request, response) ->
 - Incrementing values with keyboard and swipe pad in textmate.  http://old.nabble.com/Incremental-Sequences-for-Replacement-td27741019.html
 - http://stackoverflow.com/questions/3459476/how-to-append-to-a-file-in-node
 - http://francisshanahan.com/index.php/2011/stream-a-webcam-using-javascript-nodejs-android-opera-mobile-web-sockets-and-html5/
+- The end solution would be something like this: a global database mapping a project name to directory to watch for changes, running one server, then you watch each project manually and kill each one manually.  Something about a central database, but then you'd need to deal with permissions and I'm not going there :).
 
 ## Resources
 

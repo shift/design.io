@@ -1,5 +1,6 @@
 command   = new (require("./command"))(process.argv)
 #command.run()
+# https://github.com/hookio/hook.js
 
 io      = require('socket.io')
 express = require("express")
@@ -20,6 +21,7 @@ app.use express.static(__dirname + '/../..')
 app.use connect.bodyParser()
 
 app.post '/design.io/:event', (request, response) ->
+  _console.log "emitting #{request.body.action}d #{request.body.path}"
   designer.emit request.params.event, JSON.stringify(request.body)
   response.send request.params.event
   

@@ -10,6 +10,7 @@ class Listener
     @files        = files       = {}
     paths         = File.glob(@root)
     self          = @
+    initialized   = []
     
     for source in paths
       continue unless File.exists(source)
@@ -17,12 +18,18 @@ class Listener
       path        = _path.join(root, source.replace(root, ""))
       unless stat.isDirectory()
         files[path]       = stat
-        try
-          callback.call(self, File.relativePath(path), action: "initialize")
-        catch error
-          console.log error.stack
+        initialized.push File.absolutePath(path)
+        #try
+        #  callback.call(self, File.relativePath(path), action: "initialize")
+        #catch error
+        #  console.log error.stack
       else
         directories[path] = File.entries(path)
+    
+    try
+      callback.call self, initialized, action: "initialized"
+    catch error
+      console.log error.stack
         
   ignore: (path) ->
     for ignoredPath in @ignored

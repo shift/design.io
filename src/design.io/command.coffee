@@ -1,29 +1,57 @@
-class Command
-  constructor: (argv) ->
-    @program = program = require('commander')
+global._console ||= require("underscore.logger")
 
-    program
-      .option('-d, --directory [value]', 'directory to watch files from')
-      .option('-w, --watchfile [value]', 'location of Watchfile')
-      .option('-p, --port <n>', 'port for the socket connection')
-      .option('-u, --url [value]', 'URL for the socket connection')
-      .option('-i, --interval <n>', 'interval (in milliseconds) files should be scanned (only useful if you can\'t use FSEvents).  Not implemented')
-      .parse(process.argv)
+forever = require "forever"
 
-    program.directory ||= process.cwd()
-    program.watchfile ||= "Watchfile"
-    program.port      = if program.port then parseInt(program.port) else (process.env.PORT || 4181)
-    program.url       ||= "http://localhost:#{program.port}"
-    program.command   = program.args[0] || "watch"
-    Watcher           = require('./watcher')
-    Watcher.port      = program.post
-    Watcher.url       = program.url
-    
-  run: ->
-    program = @program
-    
-    require('./watcher').initialize
-      watchfile:  program.watchfile
-      directory:  program.directory
-    
-module.exports = Command
+command = (argv) ->
+  program = require("commander")
+  
+  program
+    .option("-d, --directory [value]", "directory to watch files from")
+    .option("-w, --watchfile [value]", "location of Watchfile")
+    .option("-p, --port <n>", "port for the socket connection")
+    .option("-u, --url [value]", "URL for the socket connection")
+    .option("-i, --interval <n>", "interval (in milliseconds) files should be scanned (only useful if you can't use FSEvents).  Not implemented")
+    .option("-n, --namespace [value]", "Namespace for the project")
+    .parse(process.argv)
+
+  program.directory ||= process.cwd()
+  program.watchfile ||= "Watchfile"
+  program.port      = if program.port then parseInt(program.port) else (process.env.PORT || 4181)
+  program.url       ||= "http://localhost:#{program.port}"
+  program.command   = program.args[0] || "watch"
+  program.root      = process.cwd()
+  unless program.namespace
+    slug = process.cwd().split("/")
+    slug = slug[slug.length - 1]
+    slug = slug.replace(/\.[^\.]+$/, "")
+    program.namespace = slug
+  
+  program
+  
+command.run = (argv) ->
+  program = command(argv)
+  
+  child = switch program.command
+    when "start"
+      forever.start ["node", "#{__dirname}/command/start.js"], silent: true, max: 1
+    when "stop"
+      forever.start ["node", "#{__dirname}/command/stop.js"], silent: true, max: 1
+    else
+      forever.start ["node", "#{__dirname}/command/watch.js"], silent: false
+  
+  child.on "start", ->
+  
+  child.on "exit", ->
+  
+  child.on "stdout", (data) ->
+    console.log data.toString()
+  
+  child.on "stderr", ->
+  
+  child.on "error", ->
+  
+  forever.startServer(child)
+  
+  program
+  
+module.exports = command

@@ -8,7 +8,9 @@
   "keywords": [
     "design",
     "development",
-    "node"
+    "node",
+    "livereload",
+    "watch"
   ],
   "licenses": [
     {
@@ -23,8 +25,12 @@
     "type": "git",
     "url": "https://github.com/viatropos/design.io.git"
   },
-  "engines": { "node": ">= 0.4.0" },
-  "bin": { "design.io": "./bin/design.io" },
+  "engines": {
+    "node": ">= 0.6.x"
+  },
+  "bin": {
+    "design.io": "./bin/design.io"
+  },
   "dependencies": {
     "commander":          ">= 0.3.2",
     "socket.io":          ">= 0.8.6",

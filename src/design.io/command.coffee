@@ -9,6 +9,7 @@ command = (argv) ->
     .option("-d, --directory [value]", "directory to watch files from")
     .option("-w, --watchfile [value]", "location of Watchfile")
     .option("-p, --port <n>", "port for the socket connection")
+    .option("--debug", "Debug?")
     .option("-u, --url [value]", "URL for the socket connection")
     .option("-i, --interval <n>", "interval (in milliseconds) files should be scanned (only useful if you can't use FSEvents).  Not implemented")
     .option("-n, --namespace [value]", "Namespace for the project")
@@ -33,7 +34,7 @@ command.run = (argv) ->
   
   child = switch program.command
     when "start"
-      forever.start ["node", "#{__dirname}/command/start.js"], silent: true, max: 1
+      forever.start ["node", "#{__dirname}/command/start.js"], silent: false, max: 1
     when "stop"
       forever.start ["node", "#{__dirname}/command/stop.js"], silent: true, max: 1
     else
@@ -42,11 +43,13 @@ command.run = (argv) ->
   child.on "start", ->
   
   child.on "exit", ->
+    
+  child.on "stop", ->
   
   child.on "stdout", (data) ->
-    console.log data.toString()
   
-  child.on "stderr", ->
+  child.on "stderr", (error) ->
+    console.log error.toString()
   
   child.on "error", ->
   

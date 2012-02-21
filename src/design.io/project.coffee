@@ -1,6 +1,10 @@
-Hook      = require("hook.io").Hook
-File      = require("pathfinder").File
-Watcher   = require("./watcher")
+Hook        = require("hook.io").Hook
+Pathfinder  = require 'pathfinder'
+File        = Pathfinder.File
+Watcher     = require("./watcher")
+async       = require 'async'
+fs          = require 'fs'
+Shift       = require 'shift'
 
 # This is the base class.
 #
@@ -18,7 +22,7 @@ class Project
       @all()[namespace]
     else
       cwd = process.cwd()
-      for project in @all()
+      for namespace, project of @all()
         return project if project.root == cwd
       null
   
@@ -44,8 +48,11 @@ class Project
     @root         = File.absolutePath(options.root)
     @namespace    = options.namespace
     @watchfile    = File.absolutePath(options.watchfile)
+    @pathfinder   = new Pathfinder(@root)
     @ignoredPaths = []
     @watchers     = []
+    
+    Watcher.pathfinder = @pathfinder
     
     throw new Error("You must specify the watchfile") unless @watchfile
     throw new Error("You must specify the directory to watch") unless @root
@@ -54,7 +61,7 @@ class Project
     throw new Error("Only one project per namespace") if store.hasOwnProperty(@namespace)
     store[@namespace]     = @
     
-    @hook       = new Hook(name: "design.io-watcher", debug: true)
+    @hook       = new Hook(name: "design.io-watcher", debug: false, silent: true)
     
   watch: ->
     hook = @hook
@@ -64,11 +71,15 @@ class Project
       
       @read =>
         new (require('./listener/mac')) root: @root, ignore: @ignoredPaths, (path, options) =>
-          options.namespace = command.namespace
+          options.namespace = @namespace
           options.paths     = if path instanceof Array then path else [path]
-
-          @changed(path, options)  
+          
+          for path in options.paths
+            @changed(path, options)
       @
+      
+    hook.on "design.io-server::stop", =>
+      hook.stop()
       
     hook.start()
     
@@ -91,6 +102,8 @@ class Project
         mainModule.paths = Module._nodeModulePaths(File.dirname(@watchfile))
       
       result = """
+      global.Watcher = {}
+      
       __project = require("design.io/lib/design.io/project").find("#{@namespace}")
       
       ignorePaths = ->
@@ -99,7 +112,11 @@ class Project
 
       watch = ->
         __project.createWatcher(arguments...)
-        
+      
+      global.Watcher.pathfinder = __project.pathfinder
+      global.Watcher.create = ->
+        __project.createWatcher(arguments...)
+          
       #{result}
       """
       
@@ -109,10 +126,10 @@ class Project
         callback.call(@) if callback
   
   changed: (path, options = {}) ->
-    @queue.push path: path, options: options  
+    @queue.push binding: @, path: path, options: options  
   
   queue: async.queue((change, callback) ->
-    @change(change.path, change.options, callback)
+    change.binding.change(change.path, change.options, callback)
   , 1)
   
   change: (path, options, callback) ->
@@ -121,7 +138,7 @@ class Project
     
     iterator  = (watcher, next) ->
       watcher.invoke(path, options, next)
-      
+    
     async.forEachSeries watchers, iterator, (error) ->
       process.nextTick(callback)
   
@@ -141,9 +158,9 @@ class Project
     @broadcast "watch", body: @toJSON()  
   
   broadcast: (action, data, callback) ->
-    #if data.action == "initialize"
-    #  callback.call(@, null, null) if callback
-    #  return
+    if data.action == "initialize"
+      callback.call(@, null, null) if callback
+      return
     
     data      = JSON.stringify(data, @replacer)
     # url       = "#{@url}/design.io/#{action}"
@@ -180,3 +197,5 @@ class Project
       
     watch: ->
       Project.createWatcher(arguments...)
+
+module.exports = Project

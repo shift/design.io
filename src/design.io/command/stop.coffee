@@ -2,7 +2,7 @@
 
 command = require(__dirname)(process.argv)
 Hook    = require("hook.io").Hook
-hook    = new Hook(name: "design.io-stop", debug: true)
+hook    = new Hook(name: "design.io-stop", debug: false)
 
 hook.on "hook::ready", (data) ->
   hook.emit "ready", data

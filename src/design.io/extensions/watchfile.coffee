@@ -1,5 +1,5 @@
 module.exports = ->
-  Watcher.create Watcher.watchfile,
+  Watcher.create require("../project").find().watchfile,
     update: ->
       @updateAll()
     

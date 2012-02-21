@@ -1,10 +1,11 @@
 class window.DesignIO
-  constructor: (options) ->
+  constructor: (namespace, options) ->
     options     ||= {}
     @callbacks    = {}
     @watchers     = []
     @port         = options.port  || 4181
-    @url          = options.url   || "#{window.location.protocol}//#{window.location.hostname}:#{@port}/design.io"
+    @namespace    = namespace
+    @url          = options.url   || "#{window.location.protocol}//#{window.location.hostname}:#{@port}/#{namespace}"
     @socket       = io.connect(@url)
     @connect()
     

@@ -18,7 +18,7 @@ class Listener
       path        = _path.join(root, source.replace(root, ""))
       unless stat.isDirectory()
         files[path]       = stat
-        initialized.push File.absolutePath(path)
+        initialized.push File.relativePath(path)
         #try
         #  callback.call(self, File.relativePath(path), action: "initialize")
         #catch error
@@ -27,7 +27,7 @@ class Listener
         directories[path] = File.entries(path)
     
     try
-      callback.call self, initialized, action: "initialized"
+      callback.call self, initialized, action: "initialize"
     catch error
       console.log error.stack
         

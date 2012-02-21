@@ -1,11 +1,8 @@
 fs          = require 'fs'
 path        = require 'path'
 uuid        = require 'node-uuid'
-async       = require 'async'
-Shift       = require 'shift'
-request     = require 'request'
 Pathfinder  = require 'pathfinder'
-Project     = require 'project'
+Project     = require './project'
 File        = Pathfinder.File
 require 'underscore.logger'
 
@@ -16,13 +13,17 @@ require 'underscore.logger'
 # @author Lance Pollard
 class Watcher
   constructor: (project, args...) ->
+    @project  = project
     methods   = args.pop()
     methods   = methods.call(@) if typeof methods == "function"
     args = args[0] if args[0] instanceof Array
     @ignore   = null
     @patterns = []
+    
     for arg in args
-      @patterns.push if typeof arg == "string" then new RegExp(arg) else arg
+      continue unless arg
+      @patterns.push(if typeof arg == "string" then new RegExp(arg) else arg)
+      
     @[key]    = value for key, value of methods
     
     @id     ||= uuid()
@@ -58,6 +59,7 @@ class Watcher
   match: (path) ->
     return false if @ignore && !!@ignore.exec(path)
     patterns = @patterns
+    
     for pattern in patterns
       return true if !!pattern.exec(path)
     false
@@ -113,8 +115,10 @@ class Watcher
       callback    = null
     data.action ||= @action
     data.path   ||= @path
-    data.id       = @id
-    action        = args.shift() || "exec"
+    data.id         = @id
+    data.timestamp  = @timestamp
+    data.namespace  = @project.namespace
+    action          = args.shift() || "exec"
     @project.broadcast action, data, callback
   
   toJSON: ->

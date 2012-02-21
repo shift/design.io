@@ -38,7 +38,7 @@ command.run = (argv) ->
     when "stop"
       forever.start ["node", "#{__dirname}/command/stop.js"], silent: true, max: 1
     else
-      forever.start ["node", "#{__dirname}/command/watch.js"], silent: false
+      forever.start ["node", "#{process.cwd()}/node_modules/design.io/lib/design.io/command/watch.js"], silent: false
   
   child.on "start", ->
   

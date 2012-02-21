@@ -102,8 +102,6 @@ class Project
         mainModule.paths = Module._nodeModulePaths(File.dirname(@watchfile))
       
       result = """
-      global.Watcher = {}
-      
       __project = require("design.io/lib/design.io/project").find("#{@namespace}")
       
       ignorePaths = ->
@@ -113,10 +111,6 @@ class Project
       watch = ->
         __project.createWatcher(arguments...)
       
-      global.Watcher.pathfinder = __project.pathfinder
-      global.Watcher.create = ->
-        __project.createWatcher(arguments...)
-          
       #{result}
       """
       

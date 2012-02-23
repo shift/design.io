@@ -51,6 +51,7 @@ class Project
     @pathfinder   = new Pathfinder(@root)
     @ignoredPaths = []
     @watchers     = []
+    @growl        = options.growl != false
     
     Watcher.pathfinder = @pathfinder
     

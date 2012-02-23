@@ -53,6 +53,9 @@ class Watcher
   error: (error, callback) ->
     #_console.error if error.hasOwnProperty("message") then error.message else error.toString()
     require('util').puts(error.stack)
+    if @project.growl
+      require("growl")(error.message, title: @project.namespace, sticky: false)
+      
     callback() if callback
     false
     

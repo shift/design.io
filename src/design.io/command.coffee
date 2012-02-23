@@ -13,6 +13,7 @@ command = (argv) ->
     .option("-u, --url [value]", "URL for the socket connection")
     .option("-i, --interval <n>", "interval (in milliseconds) files should be scanned (only useful if you can't use FSEvents).  Not implemented")
     .option("-n, --namespace [value]", "Namespace for the project")
+    .option("--growl", "Namespace for the project")
     .parse(process.argv)
 
   program.directory ||= process.cwd()
@@ -21,6 +22,7 @@ command = (argv) ->
   program.url       ||= "http://localhost:#{program.port}"
   program.command   = program.args[0] || "watch"
   program.root      = process.cwd()
+  program.growl     = !!program.growl
   unless program.namespace
     slug = process.cwd().split("/")
     slug = slug[slug.length - 1]
@@ -31,14 +33,14 @@ command = (argv) ->
   
 command.run = (argv) ->
   program = command(argv)
-  
+  args    = argv.concat()[2..-1]
   child = switch program.command
     when "start"
-      forever.start ["node", "#{__dirname}/command/start.js"], silent: false, max: 1
+      forever.start ["node", "#{__dirname}/command/start.js"].concat(args), silent: false, max: 1
     when "stop"
-      forever.start ["node", "#{__dirname}/command/stop.js"], silent: true, max: 1
+      forever.start ["node", "#{__dirname}/command/stop.js"].concat(args), silent: true, max: 1
     else
-      forever.start ["node", "#{process.cwd()}/node_modules/design.io/lib/design.io/command/watch.js"], silent: false
+      forever.start ["node", "#{process.cwd()}/node_modules/design.io/lib/design.io/command/watch.js"].concat(args), silent: false
   
   child.on "start", ->
   

@@ -8,6 +8,6 @@ directory   = ARGV[0]
 
 #directory   = STDIN.read
 fsevent.watch directory do |directories|
-  io.write directories #.inspect?
+  io.write directories.inspect
 end
 fsevent.run

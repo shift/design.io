@@ -4,7 +4,7 @@ File        = Pathfinder.File
 Watcher     = require("./watcher")
 async       = require 'async'
 fs          = require 'fs'
-Shift       = require 'shift'
+mint        = require 'mint'
 
 # This is the base class.
 #
@@ -91,7 +91,6 @@ class Project
   read: (callback) ->
     Watcher.ignoredPaths = []
     fs.readFile @watchfile, "utf-8", (error, result) =>
-      engine      = new Shift.CoffeeScript
       mainModule  = require.main
       paths       = mainModule.paths
       mainModule.moduleCache and= {}
@@ -114,7 +113,7 @@ class Project
       #{result}
       """
       
-      engine.render result, (error, result) =>
+      mint.coffee result, {}, (error, result) =>
         mainModule._compile result, mainModule.filename
         #eval("(#{context})").call()
         callback.call(@) if callback

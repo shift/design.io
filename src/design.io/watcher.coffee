@@ -76,7 +76,7 @@ class Watcher
       
       watcherCallback   = (error) =>
         clearTimeout(timeout)
-        console.log(error.stack) if error
+        console.log(error.stack || error) if error
         process.nextTick(next)
         
       timeoutError = =>

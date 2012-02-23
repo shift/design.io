@@ -13,14 +13,23 @@ Here is the [example app](https://github.com/viatropos/design.io-example) for th
 ```
 npm install design.io -g
 design.io start
-design.io stop
 ```
 
 ## Run
 
+Then in your specific project watching files, run
+
 ```
 design.io
 ```
+
+To list all of the processes design.io is using, run
+
+```
+forever list
+```
+
+This is from the awesome [forever](https://github.com/nodejitsu/forever) module from Nodejitsu, which allows you to easily manage multiple child processes.
 
 ## Extensions
 

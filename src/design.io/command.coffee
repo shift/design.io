@@ -5,7 +5,10 @@ forever = require "forever"
 command = (argv) ->
   program = require("commander")
   
+  version = JSON.parse(fs.readFileSync(__dirname + "/../../package.json", "utf-8")).version
+  
   program
+    .version(version)
     .option("-d, --directory [value]", "directory to watch files from")
     .option("-w, --watchfile [value]", "location of Watchfile")
     .option("-p, --port <n>", "port for the socket connection")

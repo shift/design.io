@@ -1,6 +1,6 @@
 {
   "name": "design.io",
-  "version": "0.3.0-2",
+  "version": "0.3.0-5",
   "description": "Design and Test Your App in Real-Time from TextMate",
   "homepage": "http://github.com/viatropos/design.io",
   "main": "lib/design.io.js",
@@ -26,7 +26,7 @@
     "url": "https://github.com/viatropos/design.io.git"
   },
   "engines": {
-    "node": ">= 0.6.x"
+    "node": ">= 0.4.x"
   },
   "bin": {
     "design.io": "./bin/design.io"

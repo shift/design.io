@@ -51,8 +51,8 @@ class Watcher
     Watcher.update()
     
   error: (error, callback) ->
-    #_console.error if error.hasOwnProperty("message") then error.message else error.toString()
-    require('util').puts(error.stack)
+    console.log(error.stack || error) unless @action == "initialize"
+    
     if @project.growl
       require("growl")(error.message, title: @project.namespace, sticky: false)
       

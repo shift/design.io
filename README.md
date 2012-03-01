@@ -1,12 +1,6 @@
 # Design.io
 
-> CSS3 + TextMate + Node.js = Real-Time Web Design
-
-## Video Tutorial
-
-[![Here's a video tutorial on vimeo](http://i.imgur.com/JunAS.png)](http://player.vimeo.com/video/31589739?title=0&amp;byline=0&amp;portrait=0&autoplay=true)
-
-Here is the [example app](https://github.com/viatropos/design.io-example) for the video.
+> Run watch tasks when a file changes, and inject the result into the browser.
 
 ## Install
 

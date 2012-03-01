@@ -14,7 +14,7 @@ Here is the [example app](https://github.com/viatropos/design.io-example) for th
 npm install design.io -g
 ```
 
-**Note**: Design.io uses Ruby to watch files on a Mac, using Mac's FSEvents.  FSEvents are a very efficient way of getting notified when a file changes, the other solution is to iterate over the project file tree every <n> milliseconds, but that quickly becomes a problem with decently sized projects.  The reason design.io uses Ruby to do this is because the Node.js `fs.watch` command does not work correctly across different versions of node and even sometimes on different versions of the Mac OS.  There are several issues posted about this: https://github.com/joyent/node/issues/search?q=fs.watch.  If you know of a better workaround, please let me know - this is only temporary, but Mac comes with Ruby and this solution works very well.  Do note though, if you don't have [RVM (Ruby Version Manager)](https://rvm.beginrescueend.com/rvm/install/) installed, you most likely have to install design.io with `sudo npm install design.io -g`.
+**Note**: Design.io uses Ruby to watch files on a Mac, using Mac's FSEvents.  FSEvents is the most efficient way of getting notified when a file changes on a Mac.  The other solution is to iterate over the project file tree every <n> milliseconds, but that quickly becomes a problem with decently sized projects.  The reason design.io uses Ruby to do this is because the Node.js `fs.watch` command does not work correctly across different versions of node and even sometimes on different versions of the Mac OS.  There are several issues posted about this: https://github.com/joyent/node/issues/search?q=fs.watch.  If you know of a better workaround, please let me know - this is only temporary, but Mac comes with Ruby and this solution works very well.  Do note though, if you don't have [RVM (Ruby Version Manager)](https://rvm.beginrescueend.com/rvm/install/) installed, you most likely have to install design.io with `sudo npm install design.io -g`.
 
 ## Run
 
@@ -159,7 +159,7 @@ watch /\.md$/ # some custom one...
 
 (The MIT License)
 
-Copyright &copy; 2011 [Lance Pollard](http://twitter.com/viatropos) &lt;lancejpollard@gmail.com&gt;
+Copyright &copy; 2011 - 2012 [Lance Pollard](http://twitter.com/viatropos) &lt;lancejpollard@gmail.com&gt;
 
 Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files (the 'Software'), to deal in the Software without restriction, including without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, and to permit persons to whom the Software is furnished to do so, subject to the following conditions:
 

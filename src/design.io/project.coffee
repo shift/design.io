@@ -62,7 +62,7 @@ class Project
     throw new Error("Only one project per namespace") if store.hasOwnProperty(@namespace)
     store[@namespace]     = @
     
-    @hook       = new Hook(name: "design.io-watcher", debug: false, silent: true)
+    @hook       = new Hook(name: "design.io-watcher::#{@namespace}", debug: true, silent: false)
     
   watch: ->
     hook = @hook
@@ -74,13 +74,16 @@ class Project
         new (require('./listener/mac')) root: @root, ignore: @ignoredPaths, (path, options) =>
           options.namespace = @namespace
           options.paths     = if path instanceof Array then path else [path]
-          
           for path in options.paths
             @changed(path, options)
       @
       
     hook.on "design.io-server::stop", =>
       hook.stop()
+      
+    hook.on "design.io-server::connect", (data, callback) =>
+      @connect()
+      callback()
       
     hook.start()
     
@@ -156,8 +159,8 @@ class Project
       callback.call(@, null, null) if callback
       return
     
+    data.namespace ||= @namespace
     data      = JSON.stringify(data, @replacer)
-    # url       = "#{@url}/design.io/#{action}"
     
     @hook.emit action, data
   

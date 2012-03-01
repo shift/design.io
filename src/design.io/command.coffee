@@ -1,4 +1,5 @@
 global._console ||= require("underscore.logger")
+fs  = require 'fs'
 
 forever = require "forever"
 
@@ -45,7 +46,8 @@ command.run = (argv) ->
     else
       forever.start ["node", "#{process.cwd()}/node_modules/design.io/lib/design.io/command/watch.js"].concat(args), silent: false
   
-  child.on "start", ->
+  child.on "start", (data) ->
+    console.log data
   
   child.on "exit", ->
     

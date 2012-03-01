@@ -44,7 +44,7 @@ command.run = (argv) ->
     when "stop"
       forever.start ["node", "#{__dirname}/command/stop.js"].concat(args), silent: true, max: 1
     else
-      forever.start ["node", "#{process.cwd()}/node_modules/design.io/lib/design.io/command/watch.js"].concat(args), silent: false
+      forever.start ["node", "#{__dirname}/command/watch.js"].concat(args), silent: false
   
   child.on "start", (data) ->
     console.log data
